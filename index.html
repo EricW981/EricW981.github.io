@@ -983,7 +983,7 @@
 
         // === 5. AJAX 表单静默提交逻辑 ===
         document.getElementById("contactForm").addEventListener("submit", function(e) {
-            // e.preventDefault(); 
+            e.preventDefault(); 
             
             const form = e.target;
             const btn = document.getElementById("submitBtn");
