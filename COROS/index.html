@@ -323,28 +323,29 @@
             <!-- 项目 1 -->
             <div class="tech-card project-block">
                 <div class="project-detail">
-                    <h3>基于地基雷达***智能成像***</h3>
+                    <h3>基于毫米波雷达的人体动作识别算法*</h3>
                     <div class="project-tag-bar">
                         <span class="proj-tag">J科委****项目</span>
                         <span class="proj-tag">核心成员</span>
                     </div>
                     <p style="margin-bottom: 15px; color: var(--text-secondary); font-size: 0.98rem; line-height: 1.7; text-align: justify;">
-                        面向卫星等空间目标极稀疏观测场景，开展基于地基雷达的高分辨率二维智能成像技术攻关。
+                        基于雷达时序信号开展人体手势识别研究，完成从数据采集、信号处理、特征提取与识别的完整算法开发。
                     </p>
                     <ul>
-                        <li><strong>方案论证：</strong>参与总体方案设计与核心能力指标论证，完成深化论证报告，支撑项目立项。</li>
-                        <li><strong>机理建模：</strong>研究地基雷达多维观测信息获取机理，建立极稀疏观测条件下二维成像理论模型。</li>
-                        <li><strong>算法研发：</strong>研究融合稀疏重建与智能成像的二维重构算法，实现复杂场景下目标成像分辨率提升1个数量级。</li>
-                        <li><strong>工程验证：</strong>基于地基雷达开展70余次外场实验，构建TB级多源数据集，完成算法验证，支撑项目结题。</li>
+                        <li><strong>数据采集：</strong>基于AWR1642雷达搭建数据采集系统，完成10类手势样本采集及数据预处理。</li>
+                        <li><strong>信号处理：</strong>采用信号滤波、CFAR检测等算法提取距离、速度、角度等时序特征，构建人体动作特征表示。</li>
+                        <li><strong>识别网络：</strong>设计基于CNN的双分支特征融合网络，融合距离-速度及角度时序特征，实现动态手势分类识别。</li>
+                        <li><strong>模型优化：</strong>采用随机裁剪、随机旋转等数据增强策略提升模型泛化能力，实现手势识别准确率94.5%以上。</li>
                     </ul>
                 </div>
                 <!-- === 新增：多图画廊触发器 (项目 2) === -->
                 <div class="media-slot" onclick='openGallery([
-                    "https://picui.ogmua.cn/s1/2026/08/03/6a6fd96a62520.webp",
-                    "https://picui.ogmua.cn/s1/2026/08/03/6a70137212243.webp",
-                    "https://picui.ogmua.cn/s1/2026/08/03/6a70141c6e06f.webp"
+                    "https://picui.ogmua.cn/s1/2026/08/07/6a752cce29885.webp",
+                    "https://picui.ogmua.cn/s1/2026/08/07/6a752cce5acf4.webp",
+                    "https://picui.ogmua.cn/s1/2026/08/07/6a752ccde5fd8.webp",
+                    "https://picui.ogmua.cn/s1/2026/08/07/6a752cce67315.webp"
                 ])'>
-                    <img src="https://picui.ogmua.cn/s1/2026/08/03/6a6fd96a62520.webp" class="zoomable-img" alt="雷达成像对比图">
+                    <img src="https://picui.ogmua.cn/s1/2026/08/07/6a752cce29885.webp" class="zoomable-img" alt="雷达成像对比图">
                     <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; z-index: 2;"><i class="fa-solid fa-images"></i> 多图</div>
                 </div>
             </div>
@@ -352,18 +353,18 @@
             <!-- 项目 2 -->
             <div class="tech-card project-block">
                 <div class="project-detail">
-                    <h3>空间目标与深空目标三维智能成像</h3>
+                    <h3>雷达信号处理与智能感知算法研究</h3>
                     <div class="project-tag-bar">
                         <span class="proj-tag">博士课题</span>
                     </div>
                     <p style="margin-bottom: 15px; color: var(--text-secondary); font-size: 0.98rem; line-height: 1.7; text-align: justify;">
-                        面向卫星、小行星等非合作目标，研究低信噪比二维智能成像、自监督图像增强及三维智能重建技术。
+                        面向卫星、小行星等非合作目标，研究低信噪比信号处理、信号检测、参数估计、图像去噪技术。
                     </p>
                     <ul>
-                        <li><strong>二维成像：</strong>构建复杂目标动力学模型，设计基于GRFT的非线性成像算法，实现低信噪比下高精度二维成像。</li>
-                        <li><strong>图像增强：</strong>提出基于多视角观测与自监督学习的图像增强方法，实现复杂环境下高质量图像增强。</li>
-                        <li><strong>三维重构：</strong>构建融合自监督学习与NeRF/3DGS的三维重建框架，实现低信噪比、稀疏视角下高保真三维重建；优化天体目标运动模型，研究天体目标复杂运动参数估计算法，实现参数化三维重建。</li>
-                        <li><strong>技术成果：</strong>相关成果发表于IEEE TGRS、IEEE TAES等SCI期刊，授权国家发明专利，形成低信噪比智能成像算法体系。</li>
+                        <li><strong>信号检测：</strong>构建目标动力学模型，设计非线性参数估计算法，实现低信噪比条件下信号检测、参数估计。</li>
+                        <li><strong>信号增强：</strong>提出基于多视角观测与自监督学习的数据去噪与增强方法，实现复杂环境下数据质量提升。</li>
+                        <li><strong>时频分析：</strong>优化天体目标运动模型，开展时频特征建模，提出复杂运动参数估计算法，实现高精度参数估计。</li>
+                        <li><strong>技术成果：</strong>相关成果发表于IEEE TGRS、IEEE TAES等SCI期刊，授权国家发明专利，形成面向低信噪比场景的信号检测、去噪与智能感知算法体系。</li>
                     </ul>
                 </div>
                 <!-- === 新增：多图画廊触发器 (项目 3) === -->
@@ -384,18 +385,18 @@
             <!-- 项目 3 -->
             <div class="tech-card project-block">
                 <div class="project-detail">
-                    <h3>分布孔径****行星雷达测量仪</h3>
+                    <h3>****雷达测量仪</h3>
                     <div class="project-tag-bar">
                         <span class="proj-tag">国家自然科学基金重点项目</span>
                         <span class="proj-tag">核心成员</span>
                     </div>
                     <p style="margin-bottom: 15px; color: var(--text-secondary); font-size: 0.98rem; line-height: 1.7; text-align: justify;">
-                        面向月球、近地小行星等非合作天体目标，开展基于地基雷达的低信噪比三维智能成像技术攻关。
+                        面向月球、近地小行星等非合作天体目标，开展基于地基雷达的低信噪比信号去噪与三维成像技术研究。
                     </p>
                     <ul>
                         <li><strong>系统设计：</strong>参与雷达系统总体设计、能力分析与任务规划，完成系统设计及总体技术方案。</li>
-                        <li><strong>运动建模：</strong>构建天体目标自旋、轨道运动模型及仿真框架，支撑三维智能成像算法研发。</li>
-                        <li><strong>算法研发：</strong>设计融合扩散模型与NeRF/3DGS的三维智能重建算法，实现稀疏视角下三维重建精度提升60%以上。</li>
+                        <li><strong>时频分析：</strong>构建天体目标自旋、轨道运动模型，分析复杂运动下目标时频信号特征，为三维成像算法提供支撑。</li>
+                        <li><strong>算法研发：</strong>设计融合NeRF/3DGS与物理模型的三维成像算法，实现稀疏视角下三维重建精度提升60%以上。</li>
                         <li><strong>实验验证：</strong>组织 100 余次外场实验，负责实验方案设计、系统调试、算法验证及数据分析。</li>
                     </ul>
                 </div>
@@ -424,7 +425,7 @@
                         <div class="edu-time" style="align-self: flex-start;">2020.09 - 2027.03</div>
                     </div>
                     <div class="edu-major">信息与通信工程 | 博士学位(直博)</div>
-                    <div class="edu-desc">研究方向：遥感智能成像、三维重建、多模态学习、图像增强。</div>
+                    <div class="edu-desc">研究方向：雷达信号处理、智能感知、信号去噪、三维成像</div>
                 </div>
                 <div class="tech-card" style="display: flex; flex-direction: column; justify-content: center;">
                     <div class="edu-card-header">
@@ -432,7 +433,7 @@
                         <div class="edu-time" style="align-self: flex-start;">2025.12 - 2026.12</div>
                     </div>
                     <div class="edu-major">计算机与人工智能 | 国家公派联培博士</div>
-                    <div class="edu-desc">研究方向：深度时间序列建模、医疗信息学、自主智能体。</div>
+                    <div class="edu-desc">研究方向：深度时间序列建模、时序数据分析、信号去噪</div>
                 </div>
                 <div class="tech-card" style="display: flex; flex-direction: column; justify-content: center;">
                     <div class="edu-card-header">
@@ -463,7 +464,7 @@
                             </ul>
                         </li>
                         <li class="skill-details-node">
-                            <div class="skill-meta"><span class="skill-name">MATLAB / C++ / Java</span><span class="skill-spec">精通</span></div>
+                            <div class="skill-meta"><span class="skill-name">MATLAB/C++ </span><span class="skill-spec">精通</span></div>
                             <ul class="skill-sub-points">
                                 <li>熟练进行信号处理系统仿真及算法性能验证。</li>
                             </ul>
@@ -476,21 +477,21 @@
                     <div class="skill-group-title"><i class="fa-solid fa-brain"></i> 专业技能</div>
                     <ul class="skill-items-list">
                         <li class="skill-details-node">
-                            <div class="skill-meta"><span class="skill-name">生成式AI与重建</span></div>
+                            <div class="skill-meta"><span class="skill-name">信号处理</span></div>
                             <ul class="skill-sub-points">
-                                <li>熟练掌握NeRF、3DGS 机制及扩散模型（Diffusion）的应用。</li>
+                                <li>熟练掌握时频分析、信号滤波与去噪、信号检测与估计、稀疏重建。</li>
                             </ul>
                         </li>
                         <li class="skill-details-node">
-                            <div class="skill-meta"><span class="skill-name">自监督与多模态</span></div>
+                            <div class="skill-meta"><span class="skill-name">深度学习</span></div>
                             <ul class="skill-sub-points">
-                                <li>熟练掌握自监督学习架构设计及 Transformer 变体网络调优。</li>
+                                <li>熟练掌握CNN、自监督学习架构设计及Transformer变体网络调优。</li>
                             </ul>
                         </li>
                         <li class="skill-details-node">
-                            <div class="skill-meta"><span class="skill-name">遥感信号处理</span></div>
+                            <div class="skill-meta"><span class="skill-name">传感器数据处理</span></div>
                             <ul class="skill-sub-points">
-                                <li>熟练掌握雷达系统设计以及各类雷达成像算法（SAR/ISAR）。</li>
+                                <li>具有真实传感器数据采集、处理与分析经验，熟悉雷达信号特性、噪声抑制及时序特征建模。</li>
                             </ul>
                         </li>
                     </ul>
@@ -501,9 +502,9 @@
                     <div class="skill-group-title"><i class="fa-solid fa-satellite-dish"></i> 专业软件</div>
                     <ul class="skill-items-list">
                         <li class="skill-details-node">
-                            <div class="skill-meta"><span class="skill-name">电磁仿真软件</span></div>
+                            <div class="skill-meta"><span class="skill-name">时序分析软件</span></div>
                             <ul class="skill-sub-points">
-                                <li>熟练使用CST Studio、Feko等软件进行电磁仿真。</li>
+                                <li>熟练使用STK开展空间轨道时序分析。</li>
                             </ul>
                         </li>
                         <li class="skill-details-node">
@@ -513,9 +514,9 @@
                             </ul>
                         </li>
                         <li class="skill-details-node">
-                            <div class="skill-meta"><span class="skill-name">卫星建模软件</span></div>
+                            <div class="skill-meta"><span class="skill-name">电磁仿真软件</span></div>
                             <ul class="skill-sub-points">
-                                <li>熟练使用STK开展空间轨道时序分析。</li>
+                                <li>熟练使用CST Studio、Feko等软件进行电磁仿真。</li>
                             </ul>
                         </li>
                     </ul>
