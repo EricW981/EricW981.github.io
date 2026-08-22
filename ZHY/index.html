@@ -1,1 +1,1021 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王冠兴 - 个人数字履历与科研成果展示</title>
+    <!-- 引入FontAwesome图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ================= 粒子特效风与全局变量 ================= */
+        :root {
+            --accent-blue: #2563eb;
+            --accent-cyan: #0ea5e9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --border-light: rgba(37,99,235,0.15);
+            --accent-glow: linear-gradient(135deg, #2563eb 0%, #0ea5e9 100%);
+            --bg-body: #f1f5f9;
+        }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+/* === 新增：平滑滚动与导航栏遮挡偏移 === */
+        html {
+            scroll-behavior: smooth; /* 让点击导航时的跳转变得丝滑 */
+        }
+        
+        section, #profile {
+            scroll-margin-top: 90px; /* 抵消顶部 70px 导航栏的遮挡，留出 20px 呼吸空间 */
+        }
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            line-height: 1.7;
+            padding-bottom: 100px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 粒子背景层 */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background-color: var(--bg-body);
+        }
+
+        /* ================= 顶部导航 ================= */
+        nav {
+            position: fixed; top: 0; left: 0; width: 100%; height: 70px;
+            display: flex; justify-content: space-between; align-items: center; padding: 0 50px;
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            z-index: 1000; box-shadow: 0 1px 15px rgba(37,99,235,0.1); border-bottom: 1px solid rgba(37,99,235,0.15);
+        }
+        .nav-logo { font-weight: 800; font-size: 1.3rem; font-family: monospace; letter-spacing: 1px; color: var(--accent-blue); }
+        nav ul { display: flex; list-style: none; gap: 30px; }
+        nav a { text-decoration: none; color: var(--text-secondary); font-size: 1rem; font-weight: 600; transition: all 0.3s ease; position: relative; padding: 5px 0;}
+        nav a:hover, nav a.active { color: var(--accent-blue); }
+        nav a::after { content: ''; position: absolute; bottom: -2px; left: 50%; width: 0; height: 3px; background: var(--accent-glow); transition: all 0.3s ease; transform: translateX(-50%); border-radius: 2px; }
+        nav a:hover::after, nav a.active::after { width: 100%; }
+
+        /* ================= 顶部Banner与生活照 (圆框) ================= */
+        .banner {
+            width: 100%; height: 320px; margin-top: 70px;
+            background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+            position: relative;
+        }
+        .banner::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(15,23,42,0.3) 0%, rgba(241,245,249,1) 100%);
+        }
+        
+        .profile-container {
+            max-width: 1250px; margin: -100px auto 40px; padding: 0 40px;
+            display: flex; gap: 40px; align-items: flex-end; position: relative; z-index: 10;
+        }
+        
+        /* 强制圆形照片 */
+        .avatar {
+            width: 190px; height: 190px; border-radius: 50%;
+            border: 6px solid #fff; box-shadow: 0 10px 30px rgba(37,99,235,0.2);
+            background: #fff; overflow: hidden; flex-shrink: 0;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
+        }
+        .avatar:hover { 
+            transform: scale(1.05) translateY(-5px); 
+            box-shadow: 0 15px 40px rgba(37,99,235,0.4);
+            border-color: var(--accent-cyan);
+        }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .profile-info { padding-bottom: 10px; flex-grow: 1; }
+        .profile-info h1 { font-size: 3rem; font-weight: 800; margin-bottom: 5px; color: var(--text-primary); }
+        .profile-info h2 { font-size: 1.3rem; color: var(--accent-blue); margin-bottom: 15px; font-weight: 600; font-family: monospace;}
+        
+        .meta-grid { display: flex; flex-wrap: wrap; gap: 20px; font-size: 0.95rem; font-weight: 500;}
+        .meta-item { 
+            display: flex; align-items: center; gap: 10px; color: var(--text-secondary); 
+            background: white; padding: 6px 16px; border-radius: 30px; 
+            border: 1px solid #e2e8f0;
+        }
+        .meta-item i { color: var(--accent-blue); font-size: 1.1rem; }
+        
+        /* 操作按钮 */
+        .action-buttons { display: flex; gap: 15px; margin-top: 25px; }
+        .btn { 
+            padding: 12px 28px; border-radius: 8px; font-weight: 600; cursor: pointer; 
+            display: flex; align-items: center; gap: 8px; border: none; transition: all 0.3s; font-size: 1rem; 
+        }
+        .btn-primary { background: var(--accent-blue); color: white; box-shadow: 0 4px 15px rgba(37,99,235,0.3); text-decoration: none;}
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(37,99,235,0.5); background: #1d4ed8;}
+        .btn-secondary { background: white; color: var(--accent-blue); border: 2px solid var(--accent-blue); }
+        .btn-secondary:hover { background: #eff6ff; transform: translateY(-3px); box-shadow: 0 4px 15px rgba(37,99,235,0.15); }
+
+        /* ================= 统一区块与卡片 ================= */
+        main { position: relative; z-index: 10; }
+        section { padding: 80px 40px 20px; max-width: 1250px; margin: 0 auto; }
+        
+        .section-title { 
+            font-size: 1.8rem; font-weight: 700; margin-bottom: 40px; position: relative; 
+            display: flex; align-items: center; gap: 12px; color: var(--text-primary); 
+        }
+        .section-title i { color: var(--accent-cyan); font-size: 1.6rem;}
+
+        /* 硬核科技风卡片 */
+        .tech-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light); border-left: 4px solid var(--accent-blue); border-radius: 12px; padding: 35px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden;
+        }
+        .tech-card:hover { 
+            transform: translateY(-4px); 
+            box-shadow: 0 12px 30px rgba(37,99,235,0.1); 
+            border-left-color: var(--accent-cyan);
+        }
+
+        /* 复合双栏科研项目 */
+        .project-block { display: grid; grid-template-columns: 1fr 380px; gap: 40px; align-items: start; margin-bottom: 30px; }
+        .project-detail h3 { font-size: 1.4rem; color: var(--text-primary); margin-bottom: 12px; font-weight: 700; }
+        .project-tag-bar { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .proj-tag { font-size: 0.85rem; background: rgba(37, 99, 235, 0.08); color: var(--accent-blue); padding: 4px 12px; border-radius: 6px; font-weight: 600; }
+        .project-detail ul { list-style: none; padding-left: 0; }
+        .project-detail li { position: relative; padding-left: 20px; margin-bottom: 12px; color: var(--text-secondary); font-size: 0.98rem; }
+        .project-detail li::before { content: '•'; position: absolute; left: 0; color: var(--accent-blue); font-weight: bold; font-size: 1.2rem; line-height: 1; }
+
+        /* 教育时间线 */
+        .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+        .edu-card-header { display: flex; flex-direction: column; margin-bottom: 12px; }
+        .edu-school { font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+        .edu-time { color: var(--accent-blue); font-size: 0.9rem; font-weight: 600; background: #eff6ff; padding: 4px 8px; border-radius: 4px; display: inline-block; margin-bottom: 8px;}
+        .edu-major { color: var(--text-primary); font-weight: 600; margin-bottom: 10px; font-size: 1rem; }
+        .edu-desc { font-size: 0.95rem; color: var(--text-secondary); }
+
+        /* 模块化技能空间 */
+        .skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 25px; }
+        .skill-group-title { font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid #e2e8f0; }
+        .skill-group-title i { color: white; background: var(--accent-glow); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); }
+        .skill-items-list { list-style: none; }
+        .skill-details-node { margin-bottom: 18px; }
+        .skill-meta { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+        .skill-name { font-weight: 700; color: var(--text-primary); font-size: 1rem; }
+        .skill-spec { color: var(--accent-blue); font-size: 0.85rem; background: #eff6ff; padding: 3px 10px; border-radius: 6px; font-weight: 600; }
+        .skill-sub-points { list-style: none; padding-left: 12px; margin-top: 6px; border-left: 2px solid #e2e8f0; }
+        .skill-sub-points li { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 6px; padding-left: 12px; position: relative; }
+        .skill-sub-points li::before { content: ''; position: absolute; left: -5px; top: 8px; width: 8px; height: 8px; border-radius: 50%; background: white; border: 2px solid var(--accent-cyan); }
+
+        /* 图墙阵列与图片互动效果 */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        .gallery-item { display: flex; flex-direction: column; background: white; border-radius: 8px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); transition: all 0.3s; }
+        .gallery-item:hover { transform: translateY(-5px); box-shadow: 0 12px 25px -5px rgba(37,99,235,0.15); border-color: rgba(37,99,235,0.2); }
+        
+        .media-slot { position: relative; height: 180px; overflow: hidden; cursor: zoom-in; background: #f1f5f9; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #e2e8f0; }
+        .zoomable-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s; }
+        .media-slot::after { content: '\f00e'; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.5); color: white; font-size: 2.2rem; opacity: 0; transition: all 0.3s; text-shadow: 0 2px 15px rgba(0,0,0,0.6); pointer-events: none; }
+        .media-slot:hover .zoomable-img { transform: scale(1.08); filter: brightness(0.75); }
+        .media-slot:hover::after { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        
+        .gallery-info { padding: 20px; flex-grow: 1; }
+        .gallery-info h4 { font-size: 1.05rem; color: var(--text-primary); margin-bottom: 8px; line-height: 1.4; font-weight: 700; }
+        .gallery-info p { font-size: 0.88rem; color: var(--text-secondary); }
+        .gallery-badge { display: inline-block; font-size: 0.8rem; padding: 4px 10px; border-radius: 4px; margin-top: 12px; background: #f1f5f9; color: var(--text-secondary); font-weight: 600; border: 1px solid #e2e8f0; }
+        .gallery-badge.success { background: rgba(14, 165, 233, 0.1); color: var(--accent-blue); border-color: rgba(14, 165, 233, 0.2); }
+
+        /* === 新增：多图画廊专属样式 === */
+        .gallery-overlay {
+            display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(15, 23, 42, 0.95); backdrop-filter: blur(5px);
+            align-items: center; justify-content: center; flex-direction: column;
+        }
+        #gallery-main-img {
+            max-width: 85%; max-height: 85vh; object-fit: contain; border-radius: 8px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.5); transition: opacity 0.3s ease;
+        }
+        .gallery-close {
+            position: absolute; top: 20px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; transition: color 0.3s;
+        }
+        .gallery-close:hover { color: var(--accent-cyan); }
+        .gallery-nav {
+            position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.1);
+            color: white; border: none; padding: 16px 20px; font-size: 24px; cursor: pointer; border-radius: 5px; transition: background 0.3s;
+        }
+        .gallery-nav:hover { background: rgba(37,99,235,0.8); }
+        .gallery-nav.prev { left: 20px; }
+        .gallery-nav.next { right: 20px; }
+        .gallery-counter {
+            position: absolute; bottom: 30px; color: white; font-size: 16px; letter-spacing: 2px; font-weight: bold;
+        }
+
+        /* ================= 互动机器人与留言板 ================= */
+        .robot-widget {
+            position: fixed; bottom: 40px; right: 40px; width: 65px; height: 65px;
+            background: white; border-radius: 50%; 
+            box-shadow: 0 10px 30px rgba(37,99,235,0.3);
+            display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 1000;
+            animation: pulse 2s infinite; border: 2px solid var(--accent-blue);
+            transition: transform 0.3s;
+        }
+        .robot-widget:hover { transform: scale(1.1); animation: none; box-shadow: 0 15px 40px rgba(37,99,235,0.5); }
+        .robot-widget i { font-size: 30px; color: var(--accent-blue); }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37,99,235,0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(37,99,235,0); }
+            100% { box-shadow: 0 0 0 0 rgba(37,99,235,0); }
+        }
+        
+        .chat-modal {
+            position: fixed; bottom: 120px; right: 40px; width: 340px; background: white;
+            border: 1px solid rgba(37,99,235,0.2); border-radius: 12px; 
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15); display: none; flex-direction: column;
+            overflow: hidden; z-index: 1000; opacity: 0; transform: translateY(20px); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .chat-modal.active { display: flex; opacity: 1; transform: translateY(0); }
+        .chat-header { background: var(--accent-blue); color: white; padding: 18px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 1.05rem; }
+        .chat-header button { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; transition: transform 0.3s;}
+        .chat-header button:hover { transform: scale(1.2); }
+        .chat-body { padding: 25px; font-size: 0.95rem; color: var(--text-secondary); }
+        .chat-body form { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+        .chat-body input, .chat-body textarea { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-family: inherit; background: #f8fafc; outline: none; transition: border 0.3s;}
+        .chat-body input:focus, .chat-body textarea:focus { border-color: var(--accent-blue); background: #fff;}
+        .chat-body button { background: var(--accent-blue); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: 600; display: flex; justify-content: center; gap: 8px; align-items: center; transition: background 0.3s;}
+        .chat-body button:hover { background: #1d4ed8; }
+        .chat-body button:disabled { background: #94a3b8; cursor: not-allowed; }
+
+        /* ================= 全屏图片Lightbox (保留用于展示单张证书) ================= */
+        .lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.95);
+            display: none; justify-content: center; align-items: center; z-index: 2000; cursor: zoom-out;
+            opacity: 0; transition: opacity 0.3s; backdrop-filter: blur(5px);
+        }
+        .lightbox.active { display: flex; opacity: 1; }
+        .lightbox img { max-width: 90%; max-height: 90vh; object-fit: contain; border-radius: 8px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .lightbox.active img { transform: scale(1); }
+
+        /* ================= 响应式 ================= */
+        @media (max-width: 1024px) {
+            .project-block { grid-template-columns: 1fr; }
+            .profile-container { flex-direction: column; align-items: center; text-align: center; }
+            .meta-grid, .action-buttons { justify-content: center; }
+            nav ul { display: none; }
+            nav { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 粒子背景容器 -->
+    <div id="particles-js"></div>
+
+    <!-- 顶部导航 -->
+    <nav>
+        <div class="nav-logo">&lt;WANG.GX/&gt;</div>
+        <ul>
+            <li><a href="#profile" class="active">个人简介</a></li>
+            <li><a href="#experience">科研经历</a></li>
+            <li><a href="#education">教育背景</a></li>
+            <li><a href="#skills">专业技能</a></li>
+            <li><a href="#achievements">学术成果</a></li>
+            <li><a href="#practice">实践经历</a></li>
+            <li><a href="#honors">资质荣誉</a></li>
+        </ul>
+    </nav>
+
+    <!-- 顶部宽屏背景 Banner -->
+    <div class="banner"></div>
+
+    <!-- 头像与个人信息区 -->
+    <div class="profile-container" id="profile">
+        <div class="avatar">
+            <img src="https://eric-image.oss-cn-beijing.aliyuncs.com/self.jpg" alt="王冠兴生活照" onerror="this.src='https://via.placeholder.com/200/e2e8f0/0f172a?text=生活照'">
+        </div>
+        <div class="profile-info">
+            <h1>王冠兴</h1>
+            <h2>信息与通信工程博士 / 三维成像+智能信号处理</h2>
+            <div class="meta-grid">
+                <div class="meta-item"><i class="fa-solid fa-envelope"></i> gxwang111@gmail.com</div>
+                <div class="meta-item"><i class="fa-solid fa-phone"></i> 18811693591</div>
+            </div>
+            <!-- <div class="action-buttons">
+                <a href="简历_王冠兴_xxx.pdf" download class="btn btn-primary"><i class="fa-solid fa-download"></i> 获取完整简历</a>
+                <button class="btn btn-secondary" onclick="toggleChat()"><i class="fa-solid fa-code-branch"></i> 互动留言</button>
+            </div> -->
+        </div>
+    </div>
+
+    <!-- 主体内容 -->
+    <main>
+        <!-- 个人介绍 -->
+        <section id="about" class="fade-in">
+            <h2 class="section-title"><i class="fa-solid fa-microchip"></i> 个人简介</h2>
+            <div class="tech-card" style="line-height: 1.8; font-size: 1.05rem; color: #334155;">
+                北京理工大学信息与通信工程博士，研究方向涵盖雷达智能感知、信号处理及深度学习，聚焦自监督学习、NeRF/3DGS等AI算法在三维智能成像中的应用。作为核心成员参与国家自然科学基金重点项目等10余项国家级科研任务，发表IEEE TGRS、IEEE TAES等SCI论文5篇，在审SCI论文3篇，具备算法研发、模型训练、系统设计及工程验证的完整研发经验。
+            </div>
+        </section>
+
+        <!-- 科研与项目经历 -->
+        <section id="experience" class="fade-in">
+            <h2 class="section-title"><i class="fa-solid fa-satellite-dish"></i> 科研经历</h2>
+            
+            <!-- 项目 1 -->
+            <div class="tech-card project-block">
+                <div class="project-detail">
+                    <h3>分布孔径****行星雷达测量仪</h3>
+                    <div class="project-tag-bar">
+                        <span class="proj-tag">国家自然科学基金重点项目</span>
+                        <span class="proj-tag">核心成员</span>
+                    </div>
+                    <p style="margin-bottom: 15px; color: var(--text-secondary); font-size: 0.98rem; line-height: 1.7; text-align: justify;">
+                        面向月球、近地小行星等非合作天体目标，开展基于地基雷达的低信噪比三维智能成像技术攻关。
+                    </p>
+                    <ul>
+                        <li><strong>系统设计：</strong>参与雷达系统总体设计、能力分析与任务规划，完成系统设计及总体技术方案。</li>
+                        <li><strong>运动建模：</strong>构建天体目标自旋、轨道运动模型及仿真框架，支撑三维智能成像算法研发。</li>
+                        <li><strong>算法研发：</strong>设计融合扩散模型与NeRF/3DGS的三维智能重建算法，实现稀疏视角下三维重建精度提升60%以上。</li>
+                        <li><strong>实验验证：</strong>组织 100 余次外场实验，负责实验方案设计、系统调试、算法验证及数据分析。</li>
+                    </ul>
+                </div>
+                <!-- === 新增：多图画廊触发器 (项目 1) === -->
+                <div class="media-slot" onclick='openGallery([
+                    "https://images.unsplash.com/photo-1614729939124-032f0b56c9ce?w=800&q=80",
+                    "https://eric-image.oss-cn-beijing.aliyuncs.com/1_0.png",
+                    "https://eric-image.oss-cn-beijing.aliyuncs.com/1_1.png",
+                    "https://eric-image.oss-cn-beijing.aliyuncs.com/3_3png.png",
+                    "https://eric-image.oss-cn-beijing.aliyuncs.com/3_4.png"
+                ])'>
+                    <img src="https://images.unsplash.com/photo-1614729939124-032f0b56c9ce?w=800&q=80" class="zoomable-img" alt="三维重建图1">
+                    <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; z-index: 2;"><i class="fa-solid fa-images"></i> 多图</div>
+                </div>
+            </div>
+
+            <!-- 项目 2 -->
+            <div class="tech-card project-block">
+                <div class="project-detail">
+                    <h3>基于“中国复眼”***智能成像***</h3>
+                    <div class="project-tag-bar">
+                        <span class="proj-tag">J科委****项目</span>
+                        <span class="proj-tag">核心成员</span>
+                    </div>
+                    <p style="margin-bottom: 15px; color: var(--text-secondary); font-size: 0.98rem; line-height: 1.7; text-align: justify;">
+                        面向卫星等空间目标极稀疏观测场景，开展基于地基雷达的高分辨率二维智能成像技术攻关。
+                    </p>
+                    <ul>
+                        <li><strong>方案论证：</strong>参与总体方案设计与核心能力指标论证，完成深化论证报告，支撑项目立项。</li>
+                        <li><strong>机理建模：</strong>研究地基雷达多维观测信息获取机理，建立极稀疏观测条件下二维成像理论模型。</li>
+                        <li><strong>算法研发：</strong>研究融合稀疏重建与智能成像的二维重构算法，实现复杂场景下目标成像分辨率提升1个数量级。</li>
+                        <li><strong>工程验证：</strong>基于“中国复眼”开展70余次外场实验，构建TB级多源数据集，完成算法验证，支撑项目结题。</li>
+                    </ul>
+                </div>
+                <!-- === 新增：多图画廊触发器 (项目 2) === -->
+                <div class="media-slot" onclick='openGallery([
+                    "https://eric-image.oss-cn-beijing.aliyuncs.com/xhcl-40-1-56_F022.jpg",
+                    "https://eric-image.oss-cn-beijing.aliyuncs.com/2_1.png",
+                    "https://eric-image.oss-cn-beijing.aliyuncs.com/2_2.png"
+                ])'>
+                    <img src="https://eric-image.oss-cn-beijing.aliyuncs.com/xhcl-40-1-56_F022.jpg" class="zoomable-img" alt="雷达成像对比图">
+                    <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; z-index: 2;"><i class="fa-solid fa-images"></i> 多图</div>
+                </div>
+            </div>
+
+            <!-- 项目 3 -->
+            <div class="tech-card project-block">
+                <div class="project-detail">
+                    <h3>空间目标与深空目标三维智能成像</h3>
+                    <div class="project-tag-bar">
+                        <span class="proj-tag">博士课题</span>
+                    </div>
+                    <p style="margin-bottom: 15px; color: var(--text-secondary); font-size: 0.98rem; line-height: 1.7; text-align: justify;">
+                        面向卫星、小行星等非合作目标，研究低信噪比二维智能成像、自监督图像增强及三维智能重建技术。
+                    </p>
+                    <ul>
+                        <li><strong>二维成像：</strong>构建复杂目标动力学模型，设计基于GRFT的非线性成像算法，实现低信噪比下高精度二维成像。</li>
+                        <li><strong>图像增强：</strong>提出基于多视角观测与自监督学习的图像增强方法，实现复杂环境下高质量图像增强。</li>
+                        <li><strong>三维重构：</strong>构建融合自监督学习与NeRF/3DGS的三维重建框架，实现低信噪比、稀疏视角下高保真三维重建；优化天体目标运动模型，研究天体目标复杂运动参数估计算法，实现参数化三维重建。</li>
+                        <li><strong>技术成果：</strong>相关成果发表于IEEE TGRS、IEEE TAES等SCI期刊，授权国家发明专利，形成低信噪比智能成像算法体系。</li>
+                    </ul>
+                </div>
+                <!-- === 新增：多图画廊触发器 (项目 3) === -->
+                <div class="media-slot" onclick='openGallery([
+                    "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80",
+                    "https://eric-image.oss-cn-beijing.aliyuncs.com/3_0.png",
+                    "https://eric-image.oss-cn-beijing.aliyuncs.com/3_0_1.png",
+                    "https://eric-image.oss-cn-beijing.aliyuncs.com/3_1.png",
+                    "https://eric-image.oss-cn-beijing.aliyuncs.com/3_2.png",
+                    "https://eric-image.oss-cn-beijing.aliyuncs.com/3_3png.png",
+                    "https://eric-image.oss-cn-beijing.aliyuncs.com/3_4.png"
+                ])'>
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80" class="zoomable-img" alt="自监督去噪成果图">
+                    <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; z-index: 2;"><i class="fa-solid fa-images"></i> 多图</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 教育背景 -->
+        <section id="education" class="fade-in">
+            <h2 class="section-title"><i class="fa-solid fa-graduation-cap"></i> 教育背景</h2>
+            <div class="edu-grid">
+                <div class="tech-card" style="display: flex; flex-direction: column; justify-content: center;">
+                    <div class="edu-card-header">
+                        <div class="edu-school">北京理工大学</div>
+                        <div class="edu-time" style="align-self: flex-start;">2020.09 - 2027.03</div>
+                    </div>
+                    <div class="edu-major">信息与通信工程 | 博士学位(直博)</div>
+                    <div class="edu-desc">研究方向：遥感智能成像、三维重建、多模态学习、图像增强。</div>
+                </div>
+                <div class="tech-card" style="display: flex; flex-direction: column; justify-content: center;">
+                    <div class="edu-card-header">
+                        <div class="edu-school">奥克兰大学 (QS 65)</div>
+                        <div class="edu-time" style="align-self: flex-start;">2025.12 - 2026.12</div>
+                    </div>
+                    <div class="edu-major">计算机与人工智能 | 国家公派联培博士</div>
+                    <div class="edu-desc">研究方向：深度时间序列建模、医疗信息学、自主智能体。</div>
+                </div>
+                <div class="tech-card" style="display: flex; flex-direction: column; justify-content: center;">
+                    <div class="edu-card-header">
+                        <div class="edu-school">北京理工大学</div>
+                        <div class="edu-time" style="align-self: flex-start;">2016.08 - 2020.06</div>
+                    </div>
+                    <div class="edu-major">电子信息工程 | 学士学位</div>
+                    <div class="edu-desc">主修课程：信号与系统、数字信号处理、通信原理等 (GPA: 3.95/4.0, 前5%)。</div>
+                </div>
+            </div>
+        </section>
+
+     <!-- 专业技能 -->
+        <section id="skills" class="fade-in">
+            <h2 class="section-title"><i class="fa-solid fa-code"></i> 专业技能</h2>
+            <!-- 核心修改：添加了内联样式强制 2 列等宽 (repeat(2, 1fr)) -->
+            <div class="skills-container" style="grid-template-columns: repeat(2, 1fr);">
+                
+                <!-- 卡片 1 -->
+                <div class="tech-card" style="padding: 25px;">
+                    <div class="skill-group-title"><i class="fa-brands fa-python"></i> 编程能力</div>
+                    <ul class="skill-items-list">
+                        <li class="skill-details-node">
+                            <div class="skill-meta"><span class="skill-name">Python / PyTorch</span><span class="skill-spec">核心</span></div>
+                            <ul class="skill-sub-points">
+                                <li>精通深度学习网络搭建、损失函数自定义及数据流优化。</li>
+                                <li>熟练应用多线程处理及模型超参数调优。</li>
+                            </ul>
+                        </li>
+                        <li class="skill-details-node">
+                            <div class="skill-meta"><span class="skill-name">MATLAB / C++ / Java</span><span class="skill-spec">精通</span></div>
+                            <ul class="skill-sub-points">
+                                <li>熟练进行信号处理系统仿真及算法性能验证。</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- 卡片 2 -->
+                <div class="tech-card" style="padding: 25px;">
+                    <div class="skill-group-title"><i class="fa-solid fa-brain"></i> 专业技能</div>
+                    <ul class="skill-items-list">
+                        <li class="skill-details-node">
+                            <div class="skill-meta"><span class="skill-name">生成式AI与重建</span></div>
+                            <ul class="skill-sub-points">
+                                <li>熟练掌握NeRF、3DGS 机制及扩散模型（Diffusion）的应用。</li>
+                            </ul>
+                        </li>
+                        <li class="skill-details-node">
+                            <div class="skill-meta"><span class="skill-name">自监督与多模态</span></div>
+                            <ul class="skill-sub-points">
+                                <li>熟练掌握自监督学习架构设计及 Transformer 变体网络调优。</li>
+                            </ul>
+                        </li>
+                        <li class="skill-details-node">
+                            <div class="skill-meta"><span class="skill-name">遥感信号处理</span></div>
+                            <ul class="skill-sub-points">
+                                <li>熟练掌握雷达系统设计以及各类雷达成像算法（SAR/ISAR）。</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- 卡片 3 -->
+                <div class="tech-card" style="padding: 25px;">
+                    <div class="skill-group-title"><i class="fa-solid fa-satellite-dish"></i> 专业软件</div>
+                    <ul class="skill-items-list">
+                        <li class="skill-details-node">
+                            <div class="skill-meta"><span class="skill-name">电磁仿真软件</span></div>
+                            <ul class="skill-sub-points">
+                                <li>熟练使用CST Studio、Feko等软件进行电磁仿真。</li>
+                            </ul>
+                        </li>
+                        <li class="skill-details-node">
+                            <div class="skill-meta"><span class="skill-name">三维建模软件</span></div>
+                            <ul class="skill-sub-points">
+                                <li>熟练使用Meshlab进行目标三维建模处理。</li>
+                            </ul>
+                        </li>
+                        <li class="skill-details-node">
+                            <div class="skill-meta"><span class="skill-name">卫星建模软件</span></div>
+                            <ul class="skill-sub-points">
+                                <li>熟练使用STK开展空间轨道时序分析。</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- 卡片 4 -->
+                <div class="tech-card" style="padding: 25px;">
+                    <div class="skill-group-title"><i class="fa-solid fa-bolt"></i> 综合素质</div>
+                    <ul class="skill-items-list">
+                        <li class="skill-details-node">
+                            <div class="skill-meta"><span class="skill-name">语言能力</span></div>
+                            <ul class="skill-sub-points">
+                                <li>雅思 7.0 分，CET-6 546分。</li>
+                            </ul>
+                        </li>
+                        <li class="skill-details-node">
+                            <div class="skill-meta"><span class="skill-name">兴趣爱好</span></div>
+                            <ul class="skill-sub-points">
+                                <li>马拉松（国家二级运动员水平）、棒球（校队队长）。</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- 学术成果 -->
+        <section id="achievements" class="fade-in">
+            <h2 class="section-title"><i class="fa-solid fa-file-contract"></i> 学术成果与专利</h2>
+            <!-- （成果部分的图片依然使用单张放大功能，保持原来的 openLightbox，避免混淆） -->
+            <div class="gallery-grid">
+                <!-- 论文 1 -->
+                <div class="gallery-item">
+                    <div class="media-slot" onclick="openLightbox(this.querySelector('img').src)">
+                        <img src="https://eric-image.oss-cn-beijing.aliyuncs.com/1.png" class="zoomable-img" alt="论文首页">
+                    </div>
+                    <div class="gallery-info">
+                        <h4>3-D ISAR Imaging of Celestial Target under Low SNR</h4>
+                        <p>IEEE TGRS | 导师一作，本人二作</p>
+                        <span class="gallery-badge success">已公开发表</span>
+                    </div>
+                </div>
+                <!-- 论文 2 -->
+                <div class="gallery-item">
+                    <!-- 加入了您之前要求的偏移样式 -->
+                    <div class="media-slot" style="margin-left: 30px;" onclick="openLightbox(this.querySelector('img').src)">
+                        <img src="https://eric-image.oss-cn-beijing.aliyuncs.com/2.png" class="zoomable-img" alt="论文首页">
+                    </div>
+                    <div class="gallery-info">
+                        <h4>Multi-Dimensional Spread Target Detection</h4>
+                        <p>Remote Sensing | 第一作者</p>
+                        <span class="gallery-badge success">已公开发表</span>
+                    </div>
+                </div>
+                <!-- 论文 3 -->
+                <div class="gallery-item">
+                    <div class="media-slot" onclick="openLightbox(this.querySelector('img').src)">
+                        <img src="https://eric-image.oss-cn-beijing.aliyuncs.com/3.png" class="zoomable-img" alt="在审证明">
+                    </div>
+                    <div class="gallery-info">
+                        <h4>Physics-Aware Self-supervised Radar Sparse Imaging</h4>
+                        <p>IEEE TAES | 第一作者</p>
+                        <span class="gallery-badge">在审</span>
+                    </div>
+                </div>
+                <!-- 论文 4 -->
+                <div class="gallery-item">
+                    <div class="media-slot" onclick="openLightbox(this.querySelector('img').src)">
+                        <img src="https://eric-image.oss-cn-beijing.aliyuncs.com/4.png" class="zoomable-img" alt="在审证明">
+                    </div>
+                    <div class="gallery-info">
+                        <h4>Scattering-Aware Self-Supervised Radar Denoising</h4>
+                        <p>IEEE TGRS | 第一作者</p>
+                        <span class="gallery-badge">在审</span>
+                    </div>
+                </div>
+                <!-- 论文 5 -->
+                <div class="gallery-item">
+                    <div class="media-slot" onclick="openLightbox(this.querySelector('img').src)">
+                        <img src="https://eric-image.oss-cn-beijing.aliyuncs.com/5.png" class="zoomable-img" alt="在审证明">
+                    </div>
+                    <div class="gallery-info">
+                        <h4>Adaptive 3-D Reconstruction for Space Targets</h4>
+                        <p>IEEE TAES | 第一作者</p>
+                        <span class="gallery-badge">在审</span>
+                    </div>
+                </div>
+                <!-- 专利 1 -->
+                <div class="gallery-item">
+                    <div class="media-slot" onclick="openLightbox(this.querySelector('img').src)">
+                        <img src="https://eric-image.oss-cn-beijing.aliyuncs.com/zhuanli1.png" class="zoomable-img" alt="专利证书">
+                    </div>
+                    <div class="gallery-info">
+                        <h4>低信噪比下基于雷达多视角观测的空间目标三维重建方法</h4>
+                        <p>国家发明专利 | 第一学生发明人</p>
+                        <span class="gallery-badge success">已授权</span>
+                    </div>
+                </div>
+                <!-- 专利 2 -->
+                <div class="gallery-item">
+                    <div class="media-slot" onclick="openLightbox(this.querySelector('img').src)">
+                        <img src="https://eric-image.oss-cn-beijing.aliyuncs.com/zhuanli2.png" class="zoomable-img" alt="专利证书">
+                    </div>
+                    <div class="gallery-info">
+                        <h4>基于多角度观测与自监督架构的雷达图像去噪方法</h4>
+                        <p>国家发明专利 | 第一学生发明人</p>
+                        <span class="gallery-badge success">已授权</span>
+                    </div>
+                </div>
+                <!-- 专利 3 -->
+                <div class="gallery-item">
+                    <div class="media-slot" onclick="openLightbox(this.querySelector('img').src)">
+                        <img src="https://eric-image.oss-cn-beijing.aliyuncs.com/zhuanli3.png" class="zoomable-img" alt="受理通知书">
+                    </div>
+                    <div class="gallery-info">
+                        <h4>基于自监督插补网络的雷达稀疏成像方法</h4>
+                        <p>国家发明专利 | 第一学生发明人</p>
+                        <span class="gallery-badge">已受理</span>
+                    </div>
+                </div>
+                <!-- 专利 4 -->
+                <div class="gallery-item">
+                    <div class="media-slot" onclick="openLightbox(this.querySelector('img').src)">
+                        <img src="https://eric-image.oss-cn-beijing.aliyuncs.com/zhuanli4.png" class="zoomable-img" alt="受理通知书">
+                    </div>
+                    <div class="gallery-info">
+                        <h4>基于自适应掩码策略的自监督雷达去噪方法</h4>
+                        <p>国家发明专利 | 第一学生发明人</p>
+                        <span class="gallery-badge">待受理</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<!-- 实践经历 -->
+        <section id="practice" class="fade-in">
+            <h2 class="section-title"><i class="fa-solid fa-handshake-angle"></i> 实践经历</h2>
+            
+            <!-- 经历 1：暑期支教 -->
+            <!-- 新增 project-block 类，实现左侧文字、右侧图片的双栏布局 -->
+            <div class="tech-card project-block">
+                <div class="project-detail">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+                        <h3 style="margin-bottom: 0;">黑龙江 & 江西暑期支教</h3>
+                        <span class="proj-tag" style="font-size: 0.95rem; margin: 0;">项目负责人</span>
+                    </div>
+                    <ul>
+                        <li>独立发起并组织暑期支教项目，对接地方政府及学校，负责项目策划、志愿者招募、课程设计及团队管理。</li>
+                        <li>累计组织近百名大学生志愿者参与支教，为500余名学生开展千余课时教学，并完成扶贫调研及实践报告。</li>
+                    </ul>
+                </div>
+                <!-- === 新增：多图画廊触发器 === -->
+                <div class="media-slot" onclick='openGallery([
+                    "https://eric-image.oss-cn-beijing.aliyuncs.com/5.jpg",
+                    "https://eric-image.oss-cn-beijing.aliyuncs.com/3.jpg",
+                    "https://eric-image.oss-cn-beijing.aliyuncs.com/7.jpg"
+                ])'>
+                    <img src="https://eric-image.oss-cn-beijing.aliyuncs.com/5.jpg" class="zoomable-img" alt="支教实践照片">
+                    <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; z-index: 2;"><i class="fa-solid fa-images"></i> 多图</div>
+                </div>
+            </div>
+
+            <!-- 经历 2：急救导师 -->
+            <div class="tech-card project-block">
+                <div class="project-detail">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+                        <h3 style="margin-bottom: 0;">美国AHA心脏协会 & 北京市红十字会</h3>
+                        <span class="proj-tag" style="font-size: 0.95rem; margin: 0;">急救导师</span>
+                    </div>
+                    <ul>
+                        <li>开展心肺复苏等急救培训近百场，累计培训企业员工、师生及社会公众近千人。</li>
+                        <li>参与冬奥会、建党百年等大型活动急救培训工作，面向十余家企事业单位开展急救课程。</li>
+                    </ul>
+                </div>
+                <!-- === 新增：多图画廊触发器 === -->
+                <div class="media-slot" onclick='openGallery([
+                    "https://eric-image.oss-cn-beijing.aliyuncs.com/4.jpg",
+                    "https://eric-image.oss-cn-beijing.aliyuncs.com/1.jpg",
+                    "https://eric-image.oss-cn-beijing.aliyuncs.com/6.jpg",
+                    "https://eric-image.oss-cn-beijing.aliyuncs.com/2.jpg"
+                ])'>
+                    <img src="https://eric-image.oss-cn-beijing.aliyuncs.com/4.jpg" class="zoomable-img" alt="急救培训照片">
+                    <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; z-index: 2;"><i class="fa-solid fa-images"></i> 多图</div>
+                </div>
+            </div>
+        </section>
+
+ <!-- 荣誉证书 -->
+        <section id="honors" class="fade-in">
+            <h2 class="section-title"><i class="fa-solid fa-medal"></i> 资质证书与荣誉</h2>
+            <div class="gallery-grid">
+                
+                <div class="gallery-item">
+                    <!-- 修改为 openGallery，并传入图片数组 -->
+                    <div class="media-slot" onclick='openGallery([
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A62.png"
+                    ])'>
+                        <img src="https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A62.png" class="zoomable-img" alt="荣誉证书">
+                        <!-- 增加多图提示图标 -->
+                        <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; z-index: 2;"><i class="fa-solid fa-images"></i> 多图</div>
+                    </div>
+                    <div class="gallery-info">
+                        <h4>北京市优秀毕业生</h4>
+                        <p>表彰顶尖的学业及社会实践综合表现。</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="media-slot" onclick='openGallery([
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A611.png",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A61.png"
+                    ])'>
+                        <img src="https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A611.png" class="zoomable-img" alt="荣誉证书">
+                        <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; z-index: 2;"><i class="fa-solid fa-images"></i> 多图</div>
+                    </div>
+                    <div class="gallery-info">
+                        <h4>国家留学基金委（CSC）奖学金</h4>
+                        <p>资助赴奥克兰大学博士联培。</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="media-slot" onclick='openGallery([
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A67.png",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A68.png"
+                    ])'>
+                        <img src="https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A67.png" class="zoomable-img" alt="荣誉证书">
+                        <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; z-index: 2;"><i class="fa-solid fa-images"></i> 多图</div>
+                    </div>
+                    <div class="gallery-info">
+                        <h4>市/校级一等奖学金（26次）</h4>
+                        <p>学业绩点常年位居专业第一梯队。</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="media-slot" onclick='openGallery([
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/mls2.jpg",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/mls1.jpg",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/mls3.jpg"
+                    ])'>
+                        <img src="https://eric-image.oss-cn-beijing.aliyuncs.com/mls2.jpg" class="zoomable-img" alt="荣誉证书">
+                        <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; z-index: 2;"><i class="fa-solid fa-images"></i> 多图</div>
+                    </div>
+                    <div class="gallery-info">
+                        <h4>国家二级运动员 (马拉松)</h4>
+                        <p>国家官方认证体育资质，展现非凡耐力。</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="media-slot" onclick='openGallery([
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/jj1.jpg",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/jj2.jpg",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/jj3.jpg"
+                    ])'>
+                        <img src="https://eric-image.oss-cn-beijing.aliyuncs.com/jj1.jpg" class="zoomable-img" alt="荣誉证书">
+                        <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; z-index: 2;"><i class="fa-solid fa-images"></i> 多图</div>
+                    </div>
+                    <div class="gallery-info">
+                        <h4>美国 AHA / 红十字会急救导师</h4>
+                        <p>具备高级救护员资质，参与大型保障。</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="media-slot" onclick='openGallery([
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A63.png",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A64.png",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A65.png",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A66.png"
+                    ])'>
+                        <img src="https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A63.png" class="zoomable-img" alt="荣誉证书">
+                        <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; z-index: 2;"><i class="fa-solid fa-images"></i> 多图</div>
+                    </div>
+                    <div class="gallery-info">
+                        <h4>校级优秀学生干部（3次）</h4>
+                        <p>表彰卓越的团队凝聚力与协作才能。</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- 右下角互动机器人图标 -->
+    <div class="robot-widget" onclick="toggleChat()">
+        <i class="fa-solid fa-robot"></i>
+    </div>
+    
+    <!-- 机器人提问板 (AJAX 无感发送邮件) -->
+    <div class="chat-modal" id="chatModal">
+        <div class="chat-header">
+            <span><i class="fa-solid fa-network-wired" style="margin-right: 5px;"></i> AI 助理留言板</span>
+            <button onclick="toggleChat()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="chat-body">
+            <p>您好！感兴趣的话请填写下方表单，留言将<strong>直接发送</strong>至我的个人邮箱。</p>
+            
+            <!-- 使用 FormSubmit API 实现静默发送 -->
+            <form id="contactForm" action="https://formsubmit.co/ajax/gxwang111@gmail.com" method="POST">
+                <!-- 隐藏的邮件主题配置 -->
+                <input type="hidden" name="_subject" value="您的个人网站有新的互动留言！">
+                
+                <!-- === 核心修改 1：关闭图形验证码，防止 AJAX 提交被静默拦截 === -->
+                <input type="hidden" name="_captcha" value="false">
+                <!-- === 核心修改 2：让收到的邮件以美观的表格形式呈现 === -->
+                <input type="hidden" name="_template" value="table">
+                
+                <input type="text" name="Visitor_Name" placeholder="您的称呼 / 机构" required>
+                <input type="text" name="Contact_Info" placeholder="您的联系方式" required>
+                <textarea name="Message_Content" placeholder="请输入您想交流的技术问题或邀约..." rows="4" required></textarea>
+                
+                <button type="submit" id="submitBtn"><i class="fa-solid fa-paper-plane"></i> 提交至邮箱</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 全屏图片放大遮罩层 (Lightbox - 用于单张图片) -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="Fullscreen Image">
+    </div>
+
+    <!-- === 新增：多图画廊遮罩层 (Multi-Gallery - 用于项目展示) === -->
+    <div id="multi-gallery-overlay" class="gallery-overlay">
+        <span class="gallery-close" onclick="closeGallery()">&times;</span>
+        <button class="gallery-nav prev" onclick="event.stopPropagation(); changeImage(-1)">&#10094;</button>
+        <img id="gallery-main-img" src="" alt="展示图片" onclick="event.stopPropagation()">
+        <button class="gallery-nav next" onclick="event.stopPropagation(); changeImage(1)">&#10095;</button>
+        <div id="gallery-counter" class="gallery-counter">1 / 1</div>
+    </div>
+
+    <!-- 引入 particles.js 粒子引擎核心库 -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <!-- 交互动画、粒子逻辑与表单AJAX发送脚本 -->
+    <script>
+        // === 1. 初始化粒子背景 ===
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 70, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#2563eb" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": false },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#2563eb", "opacity": 0.3, "width": 1 },
+                "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": { "enable": true, "mode": "grab" }, 
+                    "onclick": { "enable": true, "mode": "push" },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": { "distance": 200, "line_linked": { "opacity": 0.8 } },
+                    "push": { "particles_nb": 4 }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // === 2. 滚动导航高亮与淡入特效 ===
+// === 2. 优化后的滚动导航高亮逻辑 ===
+        const navLinks = document.querySelectorAll('nav ul li a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const scrollY = window.pageYOffset;
+            
+            // 遍历导航栏里的每一个链接，反向去寻找对应的模块
+            navLinks.forEach(link => {
+                const id = link.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(id);
+                
+                if (targetElement) {
+                    // 获取该模块距离页面顶部的距离
+                    const elementTop = targetElement.offsetTop;
+                    
+                    // 150px 的阈值是为了在模块快要到达顶部时就提前亮起，避免错位
+                    if (scrollY >= (elementTop - 150)) { 
+                        current = id;
+                    }
+                }
+            });
+
+            // 移除所有高亮，只给当前模块对应的链接加上 active
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // === 3. 互动面板与全屏图片逻辑 (单图) ===
+        function toggleChat() {
+            const modal = document.getElementById('chatModal');
+            modal.classList.toggle('active');
+        }
+        
+        function openLightbox(src) {
+            const lb = document.getElementById('lightbox');
+            document.getElementById('lightbox-img').src = src;
+            lb.style.display = 'flex';
+            setTimeout(() => lb.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden'; 
+        }
+        
+        function closeLightbox() {
+            const lb = document.getElementById('lightbox');
+            lb.classList.remove('active');
+            setTimeout(() => {
+                lb.style.display = 'none';
+                document.body.style.overflow = 'auto'; 
+            }, 300); 
+        }
+
+        // === 新增：4. 多图画廊交互逻辑 ===
+        let currentGalleryImages = [];
+        let currentImageIndex = 0;
+
+        function openGallery(imagesArray) {
+            if (!imagesArray || imagesArray.length === 0) return;
+            currentGalleryImages = imagesArray;
+            currentImageIndex = 0; 
+            updateGalleryView();
+            const overlay = document.getElementById('multi-gallery-overlay');
+            overlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function changeImage(n) {
+            currentImageIndex += n;
+            if (currentImageIndex >= currentGalleryImages.length) {
+                currentImageIndex = 0;
+            } else if (currentImageIndex < 0) {
+                currentImageIndex = currentGalleryImages.length - 1;
+            }
+            updateGalleryView();
+        }
+
+        function updateGalleryView() {
+            const imgElement = document.getElementById('gallery-main-img');
+            const counterElement = document.getElementById('gallery-counter');
+            
+            imgElement.style.opacity = 0;
+            setTimeout(() => {
+                imgElement.src = currentGalleryImages[currentImageIndex];
+                imgElement.style.opacity = 1;
+            }, 150);
+            
+            counterElement.textContent = (currentImageIndex + 1) + ' / ' + currentGalleryImages.length;
+        }
+
+        function closeGallery() {
+            document.getElementById('multi-gallery-overlay').style.display = 'none';
+            document.body.style.overflow = 'auto'; 
+        }
+        
+        // 允许点击遮罩层空白处关闭画廊
+        document.getElementById('multi-gallery-overlay').addEventListener('click', closeGallery);
+
+        // === 5. AJAX 表单静默提交逻辑 ===
+        document.getElementById("contactForm").addEventListener("submit", function(e) {
+            // e.preventDefault(); 
+            
+            const form = e.target;
+            const btn = document.getElementById("submitBtn");
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 发送中...';
+            btn.disabled = true;
+
+            fetch(form.action, {
+                method: "POST",
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
+            }).then(response => {
+                if (response.ok) {
+                    btn.innerHTML = '<i class="fa-solid fa-check"></i> 发送成功！';
+                    form.reset(); 
+                    setTimeout(() => {
+                        toggleChat(); 
+                        btn.innerHTML = originalText; 
+                        btn.disabled = false;
+                    }, 2000);
+                } else {
+                    btn.innerHTML = '<i class="fa-solid fa-xmark"></i> 发送失败，请重试';
+                    btn.disabled = false;
+                    setTimeout(() => btn.innerHTML = originalText, 3000);
+                }
+            }).catch(error => {
+                btn.innerHTML = '<i class="fa-solid fa-xmark"></i> 网络错误';
+                btn.disabled = false;
+                setTimeout(() => btn.innerHTML = originalText, 3000);
+            });
+        });
+    </script>
+</body>
+</html>
