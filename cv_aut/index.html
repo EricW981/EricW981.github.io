@@ -1,0 +1,3126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Guanxing Wang | Radar Sensing, Signal Processing & Intelligent Perception</title>
+
+    <meta name="description"
+          content="Academic profile of Guanxing Wang, PhD candidate working on radar sensing, signal processing, machine learning, image enhancement, and 3D reconstruction.">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --accent-blue: #2563eb;
+            --accent-cyan: #0ea5e9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --border-light: rgba(37, 99, 235, 0.15);
+            --accent-glow: linear-gradient(135deg, #2563eb 0%, #0ea5e9 100%);
+            --bg-body: #f1f5f9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        section,
+        #profile {
+            scroll-margin-top: 90px;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            line-height: 1.7;
+            padding-bottom: 100px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ================= Background ================= */
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background-color: var(--bg-body);
+        }
+
+        /* ================= Navigation ================= */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 0 50px;
+
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+
+            z-index: 1000;
+
+            box-shadow: 0 1px 15px rgba(37, 99, 235, 0.1);
+            border-bottom: 1px solid rgba(37, 99, 235, 0.15);
+        }
+
+        .nav-logo {
+            font-weight: 800;
+            font-size: 1.3rem;
+            font-family: monospace;
+            letter-spacing: 1px;
+            color: var(--accent-blue);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 28px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.96rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--accent-blue);
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+
+            width: 0;
+            height: 3px;
+
+            background: var(--accent-glow);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+
+            border-radius: 2px;
+        }
+
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+
+        /* ================= Banner ================= */
+
+        .banner {
+            width: 100%;
+            height: 320px;
+            margin-top: 70px;
+
+            background-image:
+                url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop");
+
+            background-size: cover;
+            background-position: center;
+
+            position: relative;
+        }
+
+        .banner::after {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    to bottom,
+                    rgba(15, 23, 42, 0.3) 0%,
+                    rgba(241, 245, 249, 1) 100%
+                );
+        }
+
+        /* ================= Profile ================= */
+
+        .profile-container {
+            max-width: 1250px;
+            margin: -100px auto 40px;
+            padding: 0 40px;
+
+            display: flex;
+            gap: 40px;
+            align-items: flex-end;
+
+            position: relative;
+            z-index: 10;
+        }
+
+        .avatar {
+            width: 190px;
+            height: 190px;
+
+            border-radius: 50%;
+            border: 6px solid #fff;
+
+            background: #fff;
+            overflow: hidden;
+
+            flex-shrink: 0;
+
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
+
+            transition:
+                transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.4s;
+        }
+
+        .avatar:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.4);
+            border-color: var(--accent-cyan);
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            padding-bottom: 10px;
+            flex-grow: 1;
+        }
+
+        .profile-info h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+        }
+
+        .profile-info h2 {
+            font-size: 1.2rem;
+            color: var(--accent-blue);
+            margin-bottom: 15px;
+            font-weight: 600;
+            font-family: monospace;
+        }
+
+        .meta-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            color: var(--text-secondary);
+            background: white;
+
+            padding: 6px 16px;
+
+            border-radius: 30px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .meta-item i {
+            color: var(--accent-blue);
+            font-size: 1.05rem;
+        }
+
+        /* ================= General ================= */
+
+        main {
+            position: relative;
+            z-index: 10;
+        }
+
+        section {
+            padding: 75px 40px 20px;
+            max-width: 1250px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+
+            margin-bottom: 35px;
+
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            color: var(--text-primary);
+        }
+
+        .section-title i {
+            color: var(--accent-cyan);
+            font-size: 1.55rem;
+        }
+
+        .tech-card {
+            background: var(--bg-card);
+
+            border: 1px solid var(--border-light);
+            border-left: 4px solid var(--accent-blue);
+
+            border-radius: 12px;
+
+            padding: 32px;
+
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+
+            transition: all 0.35s ease;
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 12px 30px rgba(37, 99, 235, 0.1);
+
+            border-left-color: var(--accent-cyan);
+        }
+
+        /* ================= Research Interests ================= */
+
+        .interest-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+
+            margin-top: 20px;
+            padding-top: 18px;
+
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .interest-label {
+            width: 100%;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .proj-tag {
+            display: inline-block;
+
+            font-size: 0.84rem;
+            font-weight: 600;
+
+            background: rgba(37, 99, 235, 0.08);
+            color: var(--accent-blue);
+
+            padding: 4px 12px;
+
+            border-radius: 6px;
+        }
+
+        /* ================= Research ================= */
+
+        .project-block {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+
+            gap: 40px;
+            align-items: start;
+
+            margin-bottom: 30px;
+        }
+
+        .project-detail h3 {
+            font-size: 1.38rem;
+            color: var(--text-primary);
+
+            margin-bottom: 10px;
+
+            font-weight: 700;
+        }
+
+        .project-tag-bar {
+            display: flex;
+            gap: 9px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .project-summary {
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+            font-size: 0.98rem;
+            line-height: 1.7;
+            text-align: justify;
+        }
+
+        .project-detail ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .project-detail li {
+            position: relative;
+
+            padding-left: 20px;
+            margin-bottom: 11px;
+
+            color: var(--text-secondary);
+            font-size: 0.97rem;
+        }
+
+        .project-detail li::before {
+            content: "•";
+
+            position: absolute;
+            left: 0;
+
+            color: var(--accent-blue);
+            font-weight: bold;
+            font-size: 1.2rem;
+
+            line-height: 1.1;
+        }
+
+        /* ================= Media ================= */
+
+        .media-slot {
+            position: relative;
+
+            height: 200px;
+
+            overflow: hidden;
+            cursor: zoom-in;
+
+            background: #f1f5f9;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .zoomable-img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            transition:
+                transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.5s;
+        }
+
+        .media-slot:hover .zoomable-img {
+            transform: scale(1.08);
+            filter: brightness(0.75);
+        }
+
+        .gallery-hint {
+            position: absolute;
+
+            bottom: 10px;
+            right: 10px;
+
+            background: rgba(0, 0, 0, 0.62);
+            color: white;
+
+            padding: 4px 8px;
+
+            border-radius: 4px;
+
+            font-size: 12px;
+
+            z-index: 2;
+        }
+
+        /* ================= Publications ================= */
+
+        .gallery-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fill, minmax(280px, 1fr));
+
+            gap: 25px;
+        }
+
+        .gallery-item {
+            display: flex;
+            flex-direction: column;
+
+            background: white;
+
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 4px 6px -1px rgba(0, 0, 0, 0.05);
+
+            transition: all 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 12px 25px -5px rgba(37, 99, 235, 0.15);
+
+            border-color: rgba(37, 99, 235, 0.2);
+        }
+
+        .gallery-item .media-slot {
+            border: none;
+            border-radius: 0;
+            border-bottom: 1px solid #e2e8f0;
+            height: 180px;
+        }
+
+        .gallery-info {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .gallery-info h4 {
+            font-size: 1.02rem;
+            color: var(--text-primary);
+
+            margin-bottom: 8px;
+
+            line-height: 1.45;
+            font-weight: 700;
+        }
+
+        .gallery-info p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+        }
+
+        .gallery-badge {
+            display: inline-block;
+
+            font-size: 0.78rem;
+
+            padding: 4px 10px;
+
+            border-radius: 4px;
+
+            margin-top: 12px;
+
+            background: #f1f5f9;
+            color: var(--text-secondary);
+
+            font-weight: 600;
+
+            border: 1px solid #e2e8f0;
+        }
+
+        .gallery-badge.success {
+            background: rgba(14, 165, 233, 0.1);
+            color: var(--accent-blue);
+            border-color: rgba(14, 165, 233, 0.2);
+        }
+
+        /* ================= Education ================= */
+
+        .edu-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(320px, 1fr));
+
+            gap: 25px;
+        }
+
+        .edu-card-header {
+            display: flex;
+            flex-direction: column;
+
+            margin-bottom: 12px;
+        }
+
+        .edu-school {
+            font-size: 1.2rem;
+            font-weight: 700;
+
+            color: var(--text-primary);
+
+            margin-bottom: 4px;
+        }
+
+        .edu-time {
+            color: var(--accent-blue);
+
+            font-size: 0.88rem;
+            font-weight: 600;
+
+            background: #eff6ff;
+
+            padding: 4px 8px;
+
+            border-radius: 4px;
+
+            display: inline-block;
+
+            margin-bottom: 8px;
+        }
+
+        .edu-major {
+            color: var(--text-primary);
+
+            font-weight: 600;
+
+            margin-bottom: 10px;
+
+            font-size: 0.98rem;
+        }
+
+        .edu-desc {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+        }
+
+        /* ================= Skills ================= */
+
+        .skills-container {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 25px;
+        }
+
+        .skill-group-title {
+            font-size: 1.12rem;
+            font-weight: 700;
+
+            color: var(--text-primary);
+
+            margin-bottom: 18px;
+
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding-bottom: 12px;
+
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .skill-group-title i {
+            color: white;
+
+            background: var(--accent-glow);
+
+            width: 32px;
+            height: 32px;
+
+            border-radius: 8px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 0.9rem;
+
+            box-shadow:
+                0 4px 10px rgba(37, 99, 235, 0.2);
+        }
+
+        .skill-items-list {
+            list-style: none;
+        }
+
+        .skill-details-node {
+            margin-bottom: 16px;
+        }
+
+        .skill-name {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 0.98rem;
+        }
+
+        .skill-sub-points {
+            list-style: none;
+
+            padding-left: 12px;
+            margin-top: 6px;
+
+            border-left: 2px solid #e2e8f0;
+        }
+
+        .skill-sub-points li {
+            font-size: 0.9rem;
+
+            color: var(--text-secondary);
+
+            margin-bottom: 5px;
+            padding-left: 12px;
+
+            position: relative;
+        }
+
+        /* ================= Gallery Overlay ================= */
+
+        .gallery-overlay {
+            display: none;
+
+            position: fixed;
+
+            z-index: 9999;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background-color: rgba(15, 23, 42, 0.95);
+
+            backdrop-filter: blur(5px);
+
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        #gallery-main-img {
+            max-width: 85%;
+            max-height: 85vh;
+
+            object-fit: contain;
+
+            border-radius: 8px;
+
+            box-shadow:
+                0 4px 25px rgba(0, 0, 0, 0.5);
+
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-close {
+            position: absolute;
+
+            top: 20px;
+            right: 35px;
+
+            color: #f1f1f1;
+
+            font-size: 40px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: color 0.3s;
+        }
+
+        .gallery-close:hover {
+            color: var(--accent-cyan);
+        }
+
+        .gallery-nav {
+            position: absolute;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+
+            border: none;
+
+            padding: 16px 20px;
+
+            font-size: 24px;
+
+            cursor: pointer;
+
+            border-radius: 5px;
+
+            transition: background 0.3s;
+        }
+
+        .gallery-nav:hover {
+            background: rgba(37, 99, 235, 0.8);
+        }
+
+        .gallery-nav.prev {
+            left: 20px;
+        }
+
+        .gallery-nav.next {
+            right: 20px;
+        }
+
+        .gallery-counter {
+            position: absolute;
+
+            bottom: 30px;
+
+            color: white;
+
+            font-size: 16px;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        /* ================= Lightbox ================= */
+
+        .lightbox {
+            position: fixed;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background: rgba(15, 23, 42, 0.95);
+
+            display: none;
+            justify-content: center;
+            align-items: center;
+
+            z-index: 2000;
+
+            cursor: zoom-out;
+
+            opacity: 0;
+
+            transition: opacity 0.3s;
+
+            backdrop-filter: blur(5px);
+        }
+
+        .lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+
+            object-fit: contain;
+
+            border-radius: 8px;
+
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ================= Contact ================= */
+
+        .robot-widget {
+            position: fixed;
+
+            bottom: 40px;
+            right: 40px;
+
+            width: 65px;
+            height: 65px;
+
+            background: white;
+
+            border-radius: 50%;
+
+            box-shadow:
+                0 10px 30px rgba(37, 99, 235, 0.3);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            cursor: pointer;
+
+            z-index: 1000;
+
+            animation: pulse 2s infinite;
+
+            border: 2px solid var(--accent-blue);
+
+            transition: transform 0.3s;
+        }
+
+        .robot-widget:hover {
+            transform: scale(1.1);
+
+            animation: none;
+
+            box-shadow:
+                0 15px 40px rgba(37, 99, 235, 0.5);
+        }
+
+        .robot-widget i {
+            font-size: 30px;
+            color: var(--accent-blue);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow:
+                    0 0 0 0 rgba(37, 99, 235, 0.4);
+            }
+
+            70% {
+                box-shadow:
+                    0 0 0 15px rgba(37, 99, 235, 0);
+            }
+
+            100% {
+                box-shadow:
+                    0 0 0 0 rgba(37, 99, 235, 0);
+            }
+        }
+
+        .chat-modal {
+            position: fixed;
+
+            bottom: 120px;
+            right: 40px;
+
+            width: 340px;
+
+            background: white;
+
+            border:
+                1px solid rgba(37, 99, 235, 0.2);
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 15px 50px rgba(0, 0, 0, 0.15);
+
+            display: none;
+
+            flex-direction: column;
+
+            overflow: hidden;
+
+            z-index: 1000;
+
+            opacity: 0;
+
+            transform: translateY(20px);
+        }
+
+        .chat-modal.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .chat-header {
+            background: var(--accent-blue);
+            color: white;
+
+            padding: 18px 20px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .chat-header button {
+            background: none;
+            border: none;
+
+            color: white;
+
+            font-size: 1.2rem;
+
+            cursor: pointer;
+        }
+
+        .chat-body {
+            padding: 25px;
+
+            font-size: 0.93rem;
+
+            color: var(--text-secondary);
+        }
+
+        .chat-body form {
+            display: flex;
+            flex-direction: column;
+
+            gap: 12px;
+
+            margin-top: 20px;
+        }
+
+        .chat-body input,
+        .chat-body textarea {
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 6px;
+
+            font-family: inherit;
+
+            background: #f8fafc;
+
+            outline: none;
+        }
+
+        .chat-body input:focus,
+        .chat-body textarea:focus {
+            border-color: var(--accent-blue);
+            background: white;
+        }
+
+        .chat-body button {
+            background: var(--accent-blue);
+
+            color: white;
+
+            border: none;
+
+            padding: 12px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-weight: 600;
+        }
+
+        .chat-body button:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        /* ================= Mobile ================= */
+
+        @media (max-width: 1024px) {
+            .project-block {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .meta-grid {
+                justify-content: center;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            nav {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="particles-js"></div>
+
+    <!-- ================= Navigation ================= -->
+
+    <nav>
+        <div class="nav-logo">&lt;WANG.GX/&gt;</div>
+
+        <ul>
+            <li><a href="#profile" class="active">Profile</a></li>
+            <li><a href="#experience">Research</a></li>
+            <li><a href="#achievements">Publications</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#honors">Honors</a></li>
+            <li><a href="#practice">Leadership</a></li>
+        </ul>
+    </nav>
+
+    <!-- ================= Banner ================= -->
+
+    <div class="banner"></div>
+
+    <!-- ================= Basic Profile ================= -->
+
+    <div class="profile-container" id="profile">
+
+        <div class="avatar">
+            <img
+                src="https://eric-image.oss-cn-beijing.aliyuncs.com/self.jpg"
+                alt="Guanxing Wang">
+        </div>
+
+        <div class="profile-info">
+
+            <h1>Guanxing Wang</h1>
+
+            <h2>
+                Radar Sensing · Signal Processing · Machine Learning · 3D Reconstruction
+            </h2>
+
+            <div class="meta-grid">
+
+                <div class="meta-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    gxwang111@gmail.com
+                </div>
+
+                <div class="meta-item">
+                    <i class="fa-solid fa-phone"></i>
+                    (+64) 2040575577
+                </div>
+
+                <div class="meta-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    Auckland, New Zealand
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <main>
+
+        <!-- ================= Research Profile ================= -->
+
+        <section id="about" class="fade-in">
+
+            <h2 class="section-title">
+                <i class="fa-solid fa-microchip"></i>
+                Research Profile
+            </h2>
+
+            <div class="tech-card"
+                 style="line-height:1.8;font-size:1.03rem;color:#334155;">
+
+                PhD candidate in Information and Communication Engineering,
+                specializing in radar sensing, signal and image processing,
+                machine learning, and 3D reconstruction.
+                Experienced in mmWave radar, UAV-based sensing,
+                self-supervised learning, multi-view reconstruction,
+                and real-world sensor data acquisition.
+                Participated in 10+ national-level research projects and
+                published 5 SCI journal papers, with 3 first-author
+                manuscripts currently under review.
+
+                <div class="interest-bar">
+
+                    <div class="interest-label">
+                        Research Interests
+                    </div>
+
+                    <span class="proj-tag">
+                        Radar &amp; mmWave Sensing
+                    </span>
+
+                    <span class="proj-tag">
+                        Signal Processing
+                    </span>
+
+                    <span class="proj-tag">
+                        Machine Learning
+                    </span>
+
+                    <span class="proj-tag">
+                        Multimodal Sensing
+                    </span>
+
+                    <span class="proj-tag">
+                        UAV / Remote Sensing
+                    </span>
+
+                    <span class="proj-tag">
+                        3D Reconstruction
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ================= Research Experience ================= -->
+
+        <section id="experience" class="fade-in">
+
+            <h2 class="section-title">
+                <i class="fa-solid fa-satellite-dish"></i>
+                Research Experience
+            </h2>
+
+            <!-- ===== PhD Research ===== -->
+
+            <div class="tech-card project-block">
+
+                <div class="project-detail">
+
+                    <h3>
+                        Radar Signal Processing and Intelligent Sensing
+                    </h3>
+
+                    <div class="project-tag-bar">
+                        <span class="proj-tag">PhD Research</span>
+                        <span class="proj-tag">2020 – Present</span>
+                    </div>
+
+                    <p class="project-summary">
+                        Research on radar signal processing,
+                        intelligent sensing, image enhancement,
+                        and 3D reconstruction under low-SNR
+                        and complex observation conditions.
+                    </p>
+
+                    <ul>
+
+                        <li>
+                            <strong>Signal Processing:</strong>
+                            Developed signal processing methods for
+                            non-stationary and low-SNR radar observations.
+                        </li>
+
+                        <li>
+                            <strong>Detection &amp; Estimation:</strong>
+                            Developed weak-target detection and nonlinear
+                            parameter estimation methods for robust motion
+                            estimation and high-precision imaging.
+                        </li>
+
+                        <li>
+                            <strong>Self-Supervised Enhancement:</strong>
+                            Developed self-supervised methods for
+                            radar signal and image denoising without
+                            requiring clean reference data.
+                        </li>
+
+                        <li>
+                            <strong>Learning-Based Perception:</strong>
+                            Investigated Transformer-based methods
+                            for learning representations from radar
+                            observations.
+                        </li>
+
+                        <li>
+                            <strong>3D Sensing:</strong>
+                            Developed multi-view reconstruction methods
+                            for sparse and noisy observations.
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <div class="media-slot"
+                     onclick='openGallery([
+                        "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/3_0.png",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/3_0_1.png",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/3_1.png",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/3_2.png",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/3_3png.png",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/3_4.png"
+                     ])'>
+
+                    <img
+                        src="https://eric-image.oss-cn-beijing.aliyuncs.com/3_0.png"
+                        class="zoomable-img"
+                        alt="Radar imaging and reconstruction">
+
+                    <div class="gallery-hint">
+                        <i class="fa-solid fa-images"></i>
+                        Gallery
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ===== UAV ===== -->
+
+            <div class="tech-card project-block">
+
+                <div class="project-detail">
+
+                    <h3>
+                        UAV-Based Radar Sensing and 3D Reconstruction
+                    </h3>
+
+                    <div class="project-tag-bar">
+
+                        <span class="proj-tag">
+                            NSFC Distinguished Young Scholars-Funded Project
+                        </span>
+
+                        <span class="proj-tag">
+                            Core Researcher
+                        </span>
+
+                        <span class="proj-tag">
+                            2020 – 2023
+                        </span>
+
+                    </div>
+
+                    <p class="project-summary">
+                        Developed UAV-based radar sensing,
+                        signal processing, image enhancement,
+                        and 3D reconstruction methods for
+                        complex real-world environments.
+                    </p>
+
+                    <ul>
+
+                        <li>
+                            <strong>Data Acquisition:</strong>
+                            Conducted 40+ UAV sorties at
+                            170–260 m for real-world radar
+                            sensing and data collection.
+                        </li>
+
+                        <li>
+                            <strong>Signal &amp; Image Processing:</strong>
+                            Developed physics-based motion estimation
+                            and self-supervised denoising methods
+                            for low-SNR and complex-motion observations,
+                            improving SNR by 10–15 dB.
+                        </li>
+
+                        <li>
+                            <strong>3D Reconstruction:</strong>
+                            Developed multi-view reconstruction methods
+                            using ADMM-Net and 3DGS,
+                            achieving sub-meter reconstruction accuracy
+                            for representative urban scenes.
+                        </li>
+
+                        <li>
+                            <strong>Real-World Validation:</strong>
+                            Conducted 100+ experiments using
+                            TB-scale real sensor data collected
+                            in complex environments.
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <div class="media-slot"
+                     onclick='openGallery([
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/wrj1.png",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/wrj2.png",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/wrj3.png"
+                     ])'>
+
+                    <img
+                        src="https://eric-image.oss-cn-beijing.aliyuncs.com/wrj1.png"
+                        class="zoomable-img"
+                        alt="UAV radar sensing">
+
+                    <div class="gallery-hint">
+                        <i class="fa-solid fa-images"></i>
+                        Gallery
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ===== mmWave HAR ===== -->
+
+            <div class="tech-card project-block">
+
+                <div class="project-detail">
+
+                    <h3>
+                        mmWave Radar-Based Human Activity Recognition
+                    </h3>
+
+                    <div class="project-tag-bar">
+
+                        <span class="proj-tag">
+                            Human Activity Recognition
+                        </span>
+
+                        <span class="proj-tag">
+                            Core Researcher
+                        </span>
+
+                        <span class="proj-tag">
+                            2022 – 2024
+                        </span>
+
+                    </div>
+
+                    <p class="project-summary">
+                        Developed mmWave radar-based human gesture
+                        recognition methods covering sensor data
+                        acquisition, signal processing, feature
+                        extraction, and learning-based classification.
+                    </p>
+
+                    <ul>
+
+                        <li>
+                            <strong>Data Acquisition:</strong>
+                            Built an AWR1642 mmWave radar sensing
+                            system and collected data from
+                            10 gesture classes.
+                        </li>
+
+                        <li>
+                            <strong>Signal Processing:</strong>
+                            Applied filtering and CFAR detection
+                            to extract range, velocity,
+                            and angle features.
+                        </li>
+
+                        <li>
+                            <strong>Feature Learning:</strong>
+                            Developed a dual-branch network
+                            to fuse complementary radar features
+                            for dynamic gesture classification.
+                        </li>
+
+                        <li>
+                            <strong>Results:</strong>
+                            Achieved &gt;94.5% recognition accuracy
+                            through data augmentation and
+                            model optimization.
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <div class="media-slot"
+                     onclick='openGallery([
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/4_2.png",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/4_4.png",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/4_3.png"
+                     ])'>
+
+                    <img
+                        src="https://eric-image.oss-cn-beijing.aliyuncs.com/4_2.png"
+                        class="zoomable-img"
+                        alt="mmWave radar sensing">
+
+                    <div class="gallery-hint">
+                        <i class="fa-solid fa-images"></i>
+                        Gallery
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ===== Major NSFC Project ===== -->
+
+            <div class="tech-card project-block">
+
+                <div class="project-detail">
+
+                    <h3>
+                        Intelligent Radar Perception of Celestial Targets
+                    </h3>
+
+                    <div class="project-tag-bar">
+
+                        <span class="proj-tag">
+                            National Natural Science Foundation of China
+                        </span>
+
+                        <span class="proj-tag">
+                            Core Researcher
+                        </span>
+
+                    </div>
+
+                    <p class="project-summary">
+                        Developed radar observation modelling,
+                        target parameter estimation,
+                        sparse imaging, and intelligent perception
+                        methods for challenging low-SNR
+                        and sparse-observation scenarios.
+                    </p>
+
+                    <ul>
+
+                        <li>
+                            <strong>Observation Modelling:</strong>
+                            Investigated multi-dimensional sensing
+                            mechanisms using multi-frequency,
+                            multi-polarization, and multi-station
+                            observations.
+                        </li>
+
+                        <li>
+                            <strong>Target Estimation:</strong>
+                            Developed high-precision parameter
+                            estimation and imaging methods using
+                            physical priors and sparse observations.
+                        </li>
+
+                        <li>
+                            <strong>Learning-Based Imaging:</strong>
+                            Combined sparse reconstruction
+                            with deep learning to improve
+                            reconstruction quality under
+                            challenging observation conditions.
+                        </li>
+
+                        <li>
+                            <strong>Experimental Validation:</strong>
+                            Participated in extensive real-world
+                            sensor experiments, covering
+                            data acquisition, algorithm validation,
+                            and empirical analysis.
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <div class="media-slot"
+                     onclick='openGallery([
+                        "https://images.unsplash.com/photo-1614729939124-032f0b56c9ce?w=800&q=80",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/1_0.png",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/1_1.png",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/3_3png.png",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/3_4.png"
+                     ])'>
+
+                    <img
+                        src="https://eric-image.oss-cn-beijing.aliyuncs.com/1_0.png"
+                        class="zoomable-img"
+                        alt="Radar perception">
+
+                    <div class="gallery-hint">
+                        <i class="fa-solid fa-images"></i>
+                        Gallery
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ================= Publications ================= -->
+
+        <section id="achievements" class="fade-in">
+
+            <h2 class="section-title">
+                <i class="fa-solid fa-file-contract"></i>
+                Selected Publications &amp; Patents
+            </h2>
+
+            <div class="gallery-grid">
+
+                <!-- Publication 1 -->
+
+                <div class="gallery-item">
+
+                    <div class="media-slot"
+                         onclick="openLightbox(this.querySelector('img').src)">
+
+                        <img
+                            src="https://eric-image.oss-cn-beijing.aliyuncs.com/1.png"
+                            class="zoomable-img"
+                            alt="Publication">
+
+                    </div>
+
+                    <div class="gallery-info">
+
+                        <h4>
+                            A Parametric 3-D ISAR Imaging Method
+                            of Celestial Target Under Low SNR
+                        </h4>
+
+                        <p>
+                            IEEE Transactions on Geoscience and Remote Sensing
+                            | Co-author
+                        </p>
+
+                        <span class="gallery-badge success">
+                            Published
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- Publication 2 -->
+
+                <div class="gallery-item">
+
+                    <div class="media-slot"
+                         onclick="openLightbox(this.querySelector('img').src)">
+
+                        <img
+                            src="https://eric-image.oss-cn-beijing.aliyuncs.com/2.png"
+                            class="zoomable-img"
+                            alt="Publication">
+
+                    </div>
+
+                    <div class="gallery-info">
+
+                        <h4>
+                            Multi-Dimensional Spread Target Detection
+                            with Across Range-Doppler Unit Phenomenon
+                            Based on Generalized Radon-Fourier Transform
+                        </h4>
+
+                        <p>
+                            Remote Sensing | First Author
+                        </p>
+
+                        <span class="gallery-badge success">
+                            Published
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- Publication 3 -->
+
+                <div class="gallery-item">
+
+                    <div class="media-slot"
+                         onclick="openLightbox(this.querySelector('img').src)">
+
+                        <img
+                            src="https://eric-image.oss-cn-beijing.aliyuncs.com/4.png"
+                            class="zoomable-img"
+                            alt="Publication">
+
+                    </div>
+
+                    <div class="gallery-info">
+
+                        <h4>
+                            Scattering-Aware Multi-View Masked Networks
+                            for Self-Supervised Radar Denoising
+                        </h4>
+
+                        <p>
+                            IEEE Transactions on Geoscience and Remote Sensing
+                            | First Author
+                        </p>
+
+                        <span class="gallery-badge">
+                            Under Review
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- Publication 4 -->
+
+                <div class="gallery-item">
+
+                    <div class="media-slot"
+                         onclick="openLightbox(this.querySelector('img').src)">
+
+                        <img
+                            src="https://eric-image.oss-cn-beijing.aliyuncs.com/3.png"
+                            class="zoomable-img"
+                            alt="Publication">
+
+                    </div>
+
+                    <div class="gallery-info">
+
+                        <h4>
+                            A Self-Supervised Radar Sparse Imaging Method
+                            via Physics-Aware Imputation Network
+                        </h4>
+
+                        <p>
+                            IEEE Transactions on Aerospace
+                            and Electronic Systems | First Author
+                        </p>
+
+                        <span class="gallery-badge">
+                            Under Review
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- Publication 5 -->
+
+                <div class="gallery-item">
+
+                    <div class="media-slot"
+                         onclick="openLightbox(this.querySelector('img').src)">
+
+                        <img
+                            src="https://eric-image.oss-cn-beijing.aliyuncs.com/5.png"
+                            class="zoomable-img"
+                            alt="Publication">
+
+                    </div>
+
+                    <div class="gallery-info">
+
+                        <h4>
+                            An Adaptive 3-D Reconstruction Method
+                            for Targets Based on Multi-View
+                            Self-Supervised Framework under Low SNR
+                        </h4>
+
+                        <p>
+                            First Author
+                        </p>
+
+                        <span class="gallery-badge">
+                            Under Review
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- Patent 1 -->
+
+                <div class="gallery-item">
+
+                    <div class="media-slot"
+                         onclick="openLightbox(this.querySelector('img').src)">
+
+                        <img
+                            src="https://eric-image.oss-cn-beijing.aliyuncs.com/zhuanli1.png"
+                            class="zoomable-img"
+                            alt="Patent">
+
+                    </div>
+
+                    <div class="gallery-info">
+
+                        <h4>
+                            Method for Multi-View 3D Reconstruction
+                            under Low SNR
+                        </h4>
+
+                        <p>
+                            Chinese Invention Patent |
+                            First Student Inventor
+                        </p>
+
+                        <span class="gallery-badge success">
+                            Granted
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- Patent 2 -->
+
+                <div class="gallery-item">
+
+                    <div class="media-slot"
+                         onclick="openLightbox(this.querySelector('img').src)">
+
+                        <img
+                            src="https://eric-image.oss-cn-beijing.aliyuncs.com/zhuanli2.png"
+                            class="zoomable-img"
+                            alt="Patent">
+
+                    </div>
+
+                    <div class="gallery-info">
+
+                        <h4>
+                            Image Denoising Method Based on
+                            Multi-Angle Observations and
+                            Self-Supervised Learning
+                        </h4>
+
+                        <p>
+                            Chinese Invention Patent |
+                            First Student Inventor
+                        </p>
+
+                        <span class="gallery-badge success">
+                            Granted
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- Patent 3 -->
+
+                <div class="gallery-item">
+
+                    <div class="media-slot"
+                         onclick="openLightbox(this.querySelector('img').src)">
+
+                        <img
+                            src="https://eric-image.oss-cn-beijing.aliyuncs.com/zhuanli4.png"
+                            class="zoomable-img"
+                            alt="Patent">
+
+                    </div>
+
+                    <div class="gallery-info">
+
+                        <h4>
+                            Self-Supervised Image Denoising Method
+                            Based on an Adaptive Masking Strategy
+                        </h4>
+
+                        <p>
+                            Chinese Invention Patent |
+                            First Student Inventor
+                        </p>
+
+                        <span class="gallery-badge">
+                            Patent Application
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- Patent 4 -->
+
+                <div class="gallery-item">
+
+                    <div class="media-slot"
+                         onclick="openLightbox(this.querySelector('img').src)">
+
+                        <img
+                            src="https://eric-image.oss-cn-beijing.aliyuncs.com/zhuanli3.png"
+                            class="zoomable-img"
+                            alt="Patent">
+
+                    </div>
+
+                    <div class="gallery-info">
+
+                        <h4>
+                            Image Reconstruction Method Based on
+                            a Self-Supervised Inpainting Network
+                        </h4>
+
+                        <p>
+                            Chinese Invention Patent |
+                            First Student Inventor
+                        </p>
+
+                        <span class="gallery-badge">
+                            Patent Application
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ================= Education ================= -->
+
+        <section id="education" class="fade-in">
+
+            <h2 class="section-title">
+                <i class="fa-solid fa-graduation-cap"></i>
+                Education
+            </h2>
+
+            <div class="edu-grid">
+
+                <!-- BIT PhD -->
+
+                <div class="tech-card">
+
+                    <div class="edu-card-header">
+
+                        <div class="edu-school">
+                            Beijing Institute of Technology
+                        </div>
+
+                        <div class="edu-time"
+                             style="align-self:flex-start;">
+                            Sep. 2020 – Mar. 2027 (Expected)
+                        </div>
+
+                    </div>
+
+                    <div class="edu-major">
+                        PhD in Information and Communication Engineering
+                    </div>
+
+                    <div class="edu-desc">
+                        Research focus:
+                        radar sensing, signal and image processing,
+                        image enhancement, and 3D reconstruction.
+                    </div>
+
+                </div>
+
+                <!-- UoA -->
+
+                <div class="tech-card">
+
+                    <div class="edu-card-header">
+
+                        <div class="edu-school">
+                            University of Auckland
+                        </div>
+
+                        <div class="edu-time"
+                             style="align-self:flex-start;">
+                            Dec. 2025 – Dec. 2026
+                        </div>
+
+                    </div>
+
+                    <div class="edu-major">
+                        CSC-Sponsored Joint PhD Training
+                        in Computer Science and Artificial Intelligence
+                    </div>
+
+                    <div class="edu-desc">
+                        Research focus:
+                        machine learning,
+                        image enhancement,
+                        3D reconstruction,
+                        and sparse-view reconstruction.
+                    </div>
+
+                </div>
+
+                <!-- BIT Bachelor -->
+
+                <div class="tech-card">
+
+                    <div class="edu-card-header">
+
+                        <div class="edu-school">
+                            Beijing Institute of Technology
+                        </div>
+
+                        <div class="edu-time"
+                             style="align-self:flex-start;">
+                            Aug. 2016 – Jun. 2020
+                        </div>
+
+                    </div>
+
+                    <div class="edu-major">
+                        BEng in Electronic Information Engineering
+                    </div>
+
+                    <div class="edu-desc">
+
+                        GPA: <strong>3.95/4.0</strong>,
+                        Top 5%
+
+                        <br><br>
+
+                        Relevant Coursework:
+                        Signals and Systems,
+                        Digital Signal Processing,
+                        Communication Principles.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ================= Skills ================= -->
+
+        <section id="skills" class="fade-in">
+
+            <h2 class="section-title">
+                <i class="fa-solid fa-code"></i>
+                Technical Skills
+            </h2>
+
+            <div class="skills-container">
+
+                <!-- Radar -->
+
+                <div class="tech-card">
+
+                    <div class="skill-group-title">
+                        <i class="fa-solid fa-satellite-dish"></i>
+                        Radar &amp; Sensing
+                    </div>
+
+                    <ul class="skill-items-list">
+
+                        <li class="skill-details-node">
+
+                            <div class="skill-name">
+                                Radar Signal Processing
+                            </div>
+
+                            <ul class="skill-sub-points">
+
+                                <li>
+                                    Target detection and parameter estimation
+                                </li>
+
+                                <li>
+                                    CFAR detection
+                                </li>
+
+                                <li>
+                                    Time-frequency analysis
+                                </li>
+
+                                <li>
+                                    SAR / ISAR imaging
+                                </li>
+
+                                <li>
+                                    Low-SNR signal enhancement
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                        <li class="skill-details-node">
+
+                            <div class="skill-name">
+                                Sensing Systems
+                            </div>
+
+                            <ul class="skill-sub-points">
+
+                                <li>
+                                    mmWave radar
+                                </li>
+
+                                <li>
+                                    UAV-based sensing
+                                </li>
+
+                                <li>
+                                    Multi-view sensing
+                                </li>
+
+                                <li>
+                                    Real-world sensor data acquisition
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <!-- AI -->
+
+                <div class="tech-card">
+
+                    <div class="skill-group-title">
+                        <i class="fa-solid fa-brain"></i>
+                        Machine Learning &amp; Imaging
+                    </div>
+
+                    <ul class="skill-items-list">
+
+                        <li class="skill-details-node">
+
+                            <div class="skill-name">
+                                Deep Learning
+                            </div>
+
+                            <ul class="skill-sub-points">
+
+                                <li>
+                                    Self-supervised learning
+                                </li>
+
+                                <li>
+                                    Transformer
+                                </li>
+
+                                <li>
+                                    Diffusion models
+                                </li>
+
+                                <li>
+                                    CNN-based feature learning
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                        <li class="skill-details-node">
+
+                            <div class="skill-name">
+                                Image Processing
+                            </div>
+
+                            <ul class="skill-sub-points">
+
+                                <li>
+                                    Image enhancement and denoising
+                                </li>
+
+                                <li>
+                                    Sparse image reconstruction
+                                </li>
+
+                                <li>
+                                    Structure-preserving reconstruction
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <!-- 3D -->
+
+                <div class="tech-card">
+
+                    <div class="skill-group-title">
+                        <i class="fa-solid fa-cubes"></i>
+                        3D Sensing &amp; Reconstruction
+                    </div>
+
+                    <ul class="skill-items-list">
+
+                        <li class="skill-details-node">
+
+                            <div class="skill-name">
+                                3D Reconstruction
+                            </div>
+
+                            <ul class="skill-sub-points">
+
+                                <li>
+                                    Multi-view reconstruction
+                                </li>
+
+                                <li>
+                                    Sparse-view reconstruction
+                                </li>
+
+                                <li>
+                                    NeRF
+                                </li>
+
+                                <li>
+                                    3D Gaussian Splatting (3DGS)
+                                </li>
+
+                                <li>
+                                    ADMM-based deep unfolding
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <!-- Programming -->
+
+                <div class="tech-card">
+
+                    <div class="skill-group-title">
+                        <i class="fa-brands fa-python"></i>
+                        Programming &amp; Tools
+                    </div>
+
+                    <ul class="skill-items-list">
+
+                        <li class="skill-details-node">
+
+                            <div class="skill-name">
+                                Programming
+                            </div>
+
+                            <ul class="skill-sub-points">
+
+                                <li>
+                                    Python / PyTorch
+                                </li>
+
+                                <li>
+                                    MATLAB
+                                </li>
+
+                                <li>
+                                    C / C++
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                        <li class="skill-details-node">
+
+                            <div class="skill-name">
+                                Software &amp; Hardware
+                            </div>
+
+                            <ul class="skill-sub-points">
+
+                                <li>
+                                    CST Studio / FEKO
+                                </li>
+
+                                <li>
+                                    MeshLab / COLMAP
+                                </li>
+
+                                <li>
+                                    STK
+                                </li>
+
+                                <li>
+                                    mmWave radar / LiDAR
+                                </li>
+
+                                <li>
+                                    Anechoic chamber experiments
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ================= Honors ================= -->
+
+        <section id="honors" class="fade-in">
+
+            <h2 class="section-title">
+                <i class="fa-solid fa-medal"></i>
+                Honors &amp; Awards
+            </h2>
+
+            <div class="gallery-grid">
+
+                <!-- CSC -->
+
+                <div class="gallery-item">
+
+                    <div class="media-slot"
+                         onclick='openGallery([
+                            "https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A611.png",
+                            "https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A61.png"
+                         ])'>
+
+                        <img
+                            src="https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A611.png"
+                            class="zoomable-img"
+                            alt="CSC Scholarship">
+
+                    </div>
+
+                    <div class="gallery-info">
+
+                        <h4>
+                            China Scholarship Council Scholarship
+                        </h4>
+
+                        <p>
+                            Funded joint PhD research
+                            at the University of Auckland.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- Beijing Outstanding Graduate -->
+
+                <div class="gallery-item">
+
+                    <div class="media-slot"
+                         onclick='openGallery([
+                            "https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A62.png"
+                         ])'>
+
+                        <img
+                            src="https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A62.png"
+                            class="zoomable-img"
+                            alt="Beijing Outstanding Graduate">
+
+                    </div>
+
+                    <div class="gallery-info">
+
+                        <h4>
+                            Beijing Outstanding Graduate
+                        </h4>
+
+                        <p>
+                            Recognized for outstanding academic
+                            achievement and comprehensive performance.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- Scholarships -->
+
+                <div class="gallery-item">
+
+                    <div class="media-slot"
+                         onclick='openGallery([
+                            "https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A67.png",
+                            "https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A68.png"
+                         ])'>
+
+                        <img
+                            src="https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A67.png"
+                            class="zoomable-img"
+                            alt="Scholarship">
+
+                    </div>
+
+                    <div class="gallery-info">
+
+                        <h4>
+                            First-Class Scholarships (26 Awards)
+                        </h4>
+
+                        <p>
+                            Received multiple municipal-
+                            and university-level scholarships
+                            for academic excellence.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- Athlete -->
+
+                <div class="gallery-item">
+
+                    <div class="media-slot"
+                         onclick='openGallery([
+                            "https://eric-image.oss-cn-beijing.aliyuncs.com/mls2.jpg",
+                            "https://eric-image.oss-cn-beijing.aliyuncs.com/mls1.jpg",
+                            "https://eric-image.oss-cn-beijing.aliyuncs.com/mls3.jpg"
+                         ])'>
+
+                        <img
+                            src="https://eric-image.oss-cn-beijing.aliyuncs.com/mls2.jpg"
+                            class="zoomable-img"
+                            alt="Marathon">
+
+                    </div>
+
+                    <div class="gallery-info">
+
+                        <h4>
+                            National Level-II Athlete Standard
+                            in Marathon Running
+                        </h4>
+
+                        <p>
+                            Long-term endurance athlete
+                            with 20+ marathon and road-race finishes.
+                        </p>
+
+                    </div>
+                    
+                </div>
+                <div class="gallery-item">
+                    <div class="media-slot" onclick='openGallery([
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/jj1.jpg",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/jj2.jpg",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/jj3.jpg"
+                    ])'>
+                        <img src="https://eric-image.oss-cn-beijing.aliyuncs.com/jj1.jpg" class="zoomable-img" alt="荣誉证书">
+                        <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; z-index: 2;"><i class="fa-solid fa-images"></i> 多图</div>
+                    </div>
+                    <div class="gallery-info">
+                        <h4>AHA / Red Cross First Aid Instructor</h4>
+                        <p>Certified first aid instructor with experience supporting large-scale events.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="media-slot" onclick='openGallery([
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A63.png",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A64.png",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A65.png",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A66.png"
+                    ])'>
+                        <img src="https://eric-image.oss-cn-beijing.aliyuncs.com/%E8%AF%81%E4%B9%A63.png" class="zoomable-img" alt="荣誉证书">
+                        <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; z-index: 2;"><i class="fa-solid fa-images"></i> 多图</div>
+                    </div>
+                    <div class="gallery-info">
+                        <h4>Outstanding Student Leader (3 Awards)</h4>
+                        <p>Recognized three times for leadership, teamwork, and contributions to student activities.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ================= Leadership ================= -->
+
+        <section id="practice" class="fade-in">
+
+            <h2 class="section-title">
+                <i class="fa-solid fa-handshake-angle"></i>
+                Leadership &amp; Activities
+            </h2>
+
+            <!-- Teaching -->
+
+            <div class="tech-card project-block">
+
+                <div class="project-detail">
+
+                    <h3>
+                        Summer Teaching Volunteer Program, China
+                    </h3>
+
+                    <div class="project-tag-bar">
+                        <span class="proj-tag">
+                            Project Leader
+                        </span>
+                    </div>
+
+                    <ul>
+
+                        <li>
+                            Initiated and organized educational
+                            outreach programs in rural areas,
+                            coordinating volunteer recruitment,
+                            curriculum design, school engagement,
+                            and team management.
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <div class="media-slot"
+                     onclick='openGallery([
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/5.jpg",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/3.jpg",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/7.jpg"
+                     ])'>
+
+                    <img
+                        src="https://eric-image.oss-cn-beijing.aliyuncs.com/5.jpg"
+                        class="zoomable-img"
+                        alt="Teaching volunteer program">
+
+                    <div class="gallery-hint">
+                        <i class="fa-solid fa-images"></i>
+                        Gallery
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- First Aid -->
+
+            <div class="tech-card project-block">
+
+                <div class="project-detail">
+
+                    <h3>
+                        American Heart Association
+                        &amp; Beijing Red Cross
+                    </h3>
+
+                    <div class="project-tag-bar">
+                        <span class="proj-tag">
+                            First Aid Instructor
+                        </span>
+                    </div>
+
+                    <ul>
+
+                        <li>
+                            Delivered CPR and first-aid training
+                            to more than 1,000 participants
+                            across universities, companies,
+                            and public events.
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <div class="media-slot"
+                     onclick='openGallery([
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/4.jpg",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/1.jpg",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/6.jpg",
+                        "https://eric-image.oss-cn-beijing.aliyuncs.com/2.jpg"
+                     ])'>
+
+                    <img
+                        src="https://eric-image.oss-cn-beijing.aliyuncs.com/4.jpg"
+                        class="zoomable-img"
+                        alt="First aid training">
+
+                    <div class="gallery-hint">
+                        <i class="fa-solid fa-images"></i>
+                        Gallery
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- ================= Contact Widget ================= -->
+
+    <div class="robot-widget"
+         onclick="toggleChat()">
+
+        <i class="fa-solid fa-robot"></i>
+
+    </div>
+
+    <div class="chat-modal"
+         id="chatModal">
+
+        <div class="chat-header">
+
+            <span>
+                <i class="fa-solid fa-network-wired"
+                   style="margin-right:5px;"></i>
+
+                Contact
+            </span>
+
+            <button onclick="toggleChat()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+        <div class="chat-body">
+
+            <p>
+                If you are interested in my research,
+                potential collaboration, or postdoctoral opportunities,
+                please leave a message below.
+                Your message will be sent directly to my email.
+            </p>
+
+            <form
+                id="contactForm"
+                action="https://formsubmit.co/ajax/gxwang111@gmail.com"
+                method="POST">
+
+                <input
+                    type="hidden"
+                    name="_subject"
+                    value="New Message from Guanxing Wang's Academic Website">
+
+                <input
+                    type="hidden"
+                    name="_captcha"
+                    value="false">
+
+                <input
+                    type="hidden"
+                    name="_template"
+                    value="table">
+
+                <input
+                    type="text"
+                    name="Visitor_Name"
+                    placeholder="Your Name / Organization"
+                    required>
+
+                <input
+                    type="text"
+                    name="Contact_Info"
+                    placeholder="Your Email / Contact Information"
+                    required>
+
+                <textarea
+                    name="Message_Content"
+                    placeholder="Research, collaboration, or postdoctoral inquiry..."
+                    rows="4"
+                    required></textarea>
+
+                <button
+                    type="submit"
+                    id="submitBtn">
+
+                    <i class="fa-solid fa-paper-plane"></i>
+                    Send Message
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- ================= Lightbox ================= -->
+
+    <div
+        class="lightbox"
+        id="lightbox"
+        onclick="closeLightbox()">
+
+        <img
+            id="lightbox-img"
+            src=""
+            alt="Fullscreen image">
+
+    </div>
+
+    <!-- ================= Multi Image Gallery ================= -->
+
+    <div
+        id="multi-gallery-overlay"
+        class="gallery-overlay">
+
+        <span
+            class="gallery-close"
+            onclick="closeGallery()">
+
+            &times;
+
+        </span>
+
+        <button
+            class="gallery-nav prev"
+            onclick="event.stopPropagation(); changeImage(-1)">
+
+            &#10094;
+
+        </button>
+
+        <img
+            id="gallery-main-img"
+            src=""
+            alt="Research gallery image"
+            onclick="event.stopPropagation()">
+
+        <button
+            class="gallery-nav next"
+            onclick="event.stopPropagation(); changeImage(1)">
+
+            &#10095;
+
+        </button>
+
+        <div
+            id="gallery-counter"
+            class="gallery-counter">
+
+            1 / 1
+
+        </div>
+
+    </div>
+
+    <!-- ================= Scripts ================= -->
+
+    <script
+        src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js">
+    </script>
+
+    <script>
+
+        /* ================= Particles ================= */
+
+        particlesJS("particles-js", {
+
+            particles: {
+
+                number: {
+                    value: 70,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+
+                color: {
+                    value: "#2563eb"
+                },
+
+                shape: {
+                    type: "circle"
+                },
+
+                opacity: {
+                    value: 0.5,
+                    random: false
+                },
+
+                size: {
+                    value: 3,
+                    random: true
+                },
+
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#2563eb",
+                    opacity: 0.3,
+                    width: 1
+                },
+
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: false,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+
+            interactivity: {
+
+                detect_on: "canvas",
+
+                events: {
+
+                    onhover: {
+                        enable: true,
+                        mode: "grab"
+                    },
+
+                    onclick: {
+                        enable: true,
+                        mode: "push"
+                    },
+
+                    resize: true
+                },
+
+                modes: {
+
+                    grab: {
+                        distance: 200,
+                        line_linked: {
+                            opacity: 0.8
+                        }
+                    },
+
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+
+            retina_detect: true
+        });
+
+
+        /* ================= Navigation ================= */
+
+        const navLinks =
+            document.querySelectorAll("nav ul li a");
+
+        window.addEventListener("scroll", () => {
+
+            let current = "";
+
+            const scrollY =
+                window.pageYOffset;
+
+            navLinks.forEach(link => {
+
+                const id =
+                    link
+                        .getAttribute("href")
+                        .substring(1);
+
+                const target =
+                    document.getElementById(id);
+
+                if (
+                    target &&
+                    scrollY >= target.offsetTop - 150
+                ) {
+                    current = id;
+                }
+            });
+
+            navLinks.forEach(link => {
+
+                link.classList.remove("active");
+
+                if (
+                    link
+                        .getAttribute("href")
+                        .substring(1) === current
+                ) {
+                    link.classList.add("active");
+                }
+            });
+        });
+
+
+        /* ================= Contact ================= */
+
+        function toggleChat() {
+
+            document
+                .getElementById("chatModal")
+                .classList
+                .toggle("active");
+        }
+
+
+        /* ================= Lightbox ================= */
+
+        function openLightbox(src) {
+
+            const lightbox =
+                document.getElementById("lightbox");
+
+            document
+                .getElementById("lightbox-img")
+                .src = src;
+
+            lightbox.style.display =
+                "flex";
+
+            setTimeout(() => {
+
+                lightbox
+                    .classList
+                    .add("active");
+
+            }, 10);
+
+            document.body.style.overflow =
+                "hidden";
+        }
+
+
+        function closeLightbox() {
+
+            const lightbox =
+                document.getElementById("lightbox");
+
+            lightbox
+                .classList
+                .remove("active");
+
+            setTimeout(() => {
+
+                lightbox.style.display =
+                    "none";
+
+                document.body.style.overflow =
+                    "auto";
+
+            }, 300);
+        }
+
+
+        /* ================= Multi Gallery ================= */
+
+        let currentGalleryImages = [];
+        let currentImageIndex = 0;
+
+
+        function openGallery(imagesArray) {
+
+            if (
+                !imagesArray ||
+                imagesArray.length === 0
+            ) {
+                return;
+            }
+
+            currentGalleryImages =
+                imagesArray;
+
+            currentImageIndex =
+                0;
+
+            updateGalleryView();
+
+            const overlay =
+                document.getElementById(
+                    "multi-gallery-overlay"
+                );
+
+            overlay.style.display =
+                "flex";
+
+            document.body.style.overflow =
+                "hidden";
+        }
+
+
+        function changeImage(direction) {
+
+            currentImageIndex +=
+                direction;
+
+            if (
+                currentImageIndex >=
+                currentGalleryImages.length
+            ) {
+                currentImageIndex = 0;
+            }
+
+            if (
+                currentImageIndex < 0
+            ) {
+                currentImageIndex =
+                    currentGalleryImages.length - 1;
+            }
+
+            updateGalleryView();
+        }
+
+
+        function updateGalleryView() {
+
+            const image =
+                document.getElementById(
+                    "gallery-main-img"
+                );
+
+            const counter =
+                document.getElementById(
+                    "gallery-counter"
+                );
+
+            image.style.opacity =
+                0;
+
+            setTimeout(() => {
+
+                image.src =
+                    currentGalleryImages[
+                        currentImageIndex
+                    ];
+
+                image.style.opacity =
+                    1;
+
+            }, 150);
+
+            counter.textContent =
+                `${currentImageIndex + 1} / ${currentGalleryImages.length}`;
+        }
+
+
+        function closeGallery() {
+
+            document
+                .getElementById(
+                    "multi-gallery-overlay"
+                )
+                .style
+                .display = "none";
+
+            document.body.style.overflow =
+                "auto";
+        }
+
+
+        document
+            .getElementById(
+                "multi-gallery-overlay"
+            )
+            .addEventListener(
+                "click",
+                closeGallery
+            );
+
+
+        /* ================= FormSubmit ================= */
+
+        document
+            .getElementById("contactForm")
+            .addEventListener(
+                "submit",
+                function (event) {
+
+                    event.preventDefault();
+
+                    const form =
+                        event.target;
+
+                    const button =
+                        document.getElementById(
+                            "submitBtn"
+                        );
+
+                    const originalText =
+                        button.innerHTML;
+
+                    button.innerHTML =
+                        '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+
+                    button.disabled =
+                        true;
+
+                    fetch(
+                        form.action,
+                        {
+                            method: "POST",
+
+                            body:
+                                new FormData(form),
+
+                            headers: {
+                                Accept:
+                                    "application/json"
+                            }
+                        }
+                    )
+
+                    .then(response => {
+
+                        if (response.ok) {
+
+                            button.innerHTML =
+                                '<i class="fa-solid fa-check"></i> Sent successfully';
+
+                            form.reset();
+
+                            setTimeout(() => {
+
+                                toggleChat();
+
+                                button.innerHTML =
+                                    originalText;
+
+                                button.disabled =
+                                    false;
+
+                            }, 1800);
+
+                        } else {
+
+                            button.innerHTML =
+                                '<i class="fa-solid fa-xmark"></i> Failed — please retry';
+
+                            button.disabled =
+                                false;
+
+                            setTimeout(() => {
+
+                                button.innerHTML =
+                                    originalText;
+
+                            }, 3000);
+                        }
+                    })
+
+                    .catch(() => {
+
+                        button.innerHTML =
+                            '<i class="fa-solid fa-xmark"></i> Network error';
+
+                        button.disabled =
+                            false;
+
+                        setTimeout(() => {
+
+                            button.innerHTML =
+                                originalText;
+
+                        }, 3000);
+                    });
+                }
+            );
+
+    </script>
+
+</body>
+</html>
